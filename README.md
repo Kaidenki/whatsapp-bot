@@ -32,7 +32,7 @@
 
 ***
 ### INFORMATION
-- Change owner info in [Config](https://github.com/C-iph3r/alpha-md/blob/main/config.js)
+- Change owner info in [Config](https://chat.whatsapp.com/BGWpp9qySw81CGrqRM3ceg)
 ### SUPPORT GROUP
 In case of support or any issues you can come here
 
