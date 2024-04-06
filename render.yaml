@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: alpha-md
+    env: node
+    branch: main
+    repo: https://github.com/C-iph3r/alpha-md.git
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    autoDeploy: false
+    envVars:
+      - key: SESSION_ID
+        sync: false
+      - key: BOT_INFO
+        value: "alpha;bot;https://i.imgur.com/VIpl3q5.mp4"
+      - key: WARN_COUNT
+        value: "3"
+      - key: STATUS_VIEW
+        value: "false"
+      - key: SAVE_STATUES
+        value: "true"
+      - key: STICKER_DATA
+        value: "alpha;MD"
+      - key: PREFIX
+        value: "[!,/.]"
+      - key: WORK_TYPE
+        value: "private"
+      - key: CHATBOT
+        value: "false"
+      - key: REACT
+        value: "command"
+      - key: AUDIO_DATA
+        value: "alpha;bot;https://i.imgur.com/VgxJeCm.jpeg"
+      - key: SUDO
+        value: "917025673121"
+      - key: DATABASE_URL
+        sync: false
