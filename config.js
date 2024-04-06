@@ -30,8 +30,6 @@ module.exports = {
   ERROR_MSG: toBool(process.env.ERROR_MSG || "true"),
   AJOIN: toBool(process.env.AJOIN || "false"),
   READ: process.env.READ || "false", //true, command
-  CHATBOT: process.env.CHATBOT || "false", //gc, gc2, gc3 , pm, pm2, pm3 not working currently
-  CHATPX: process.env.CHATPX || "$", //prefix for chat bot leave null if you dont know what you are doing. not working
   REACT: process.env.REACT || "false", //true, command, emoji
   WARNCOUND: process.env.WARNCOUND || 3,
   BOT_INFO: process.env.BOT_INFO || "Alpha-md;Cipher;https://imgur.com/nXqqjPL",
@@ -42,7 +40,6 @@ module.exports = {
   BOT_PRESENCE: process.env.BOT_PRESENCE || "composing",
   AUDIO_DATA: process.env.AUDIO_DATA || "Alpha-md;Cipher;https://imgur.com/nXqqjPL",
   STICKER_DATA: process.env.STICKER_DATA || "Cipher;Alpha-md",
-  BRAINSHOP: process.env.BRAINSHOP || "181291,oXUgTsTeOOxdYSle",
   SUDO: process.env.SUDO || "2349150690169, 2348114860536",
   RMBG_KEY: process.env.RMBG_KEY,
   OPEN_AI: process.env.OPEN_AI,
