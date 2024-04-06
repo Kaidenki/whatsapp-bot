@@ -16,7 +16,7 @@ module.exports = {
   },
   PORT: process.env.PORT || 3067,
   BASE_URL: "https://api.alpha-md.rf.gd/",
-  REPO: "Primi373-creator/inrl-bot-md",
+  REPO: "C-iph3r/alpha-md",
   REJECT_CALL: toBool(process.env.REJECT_CALL || "true"),
   BADWORD_BLOCK: toBool(process.env.BADWORD_BLOCK || "false"),
   ALWAYS_ONLINE: toBool(process.env.ALWAYS_ONLINE || "true"),
