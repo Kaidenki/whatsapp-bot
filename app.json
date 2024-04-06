@@ -1,5 +1,5 @@
 {
-  "name": "alpha@2.0.1",
+  "name": "alpha@1.0.6",
   "description": "simple multi featured whatsapp bot",
   "keywords": ["whatsapp"],
   "success_url": "/",
@@ -28,7 +28,7 @@
     "BOT_INFO": {
       "description": "baasic bot configration",
       "required": true,
-      "value": "ALPHA-BOT-MD;alpha;https://i.imgur.com/DyLAuEh.jpg"
+      "value": "ALPHA-BOT-MD;alpha;https://imgur.com/nXqqjPL"
     },
     "PREFIX": {
       "description": "bot preifx  ., [.,!], false",
@@ -38,7 +38,7 @@
     "AUDIO_DATA": {
       "description": "audio metadata",
       "required": true,
-      "value": "ᴍᴜꜱɪᴄ;ᴋɪᴅ;https://i.imgur.com/DyLAuEh.jpg"
+      "value": "ᴍᴜꜱɪᴄ;ᴋɪᴅ;https://imgur.com/nXqqjPL"
     },
     "STICKER_DATA": {
       "description": "sticker data",
