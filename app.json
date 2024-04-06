@@ -28,7 +28,7 @@
     "BOT_INFO": {
       "description": "baasic bot configration",
       "required": true,
-      "value": "ALPHA-BOT-MD;alpha;https://imgur.com/nXqqjPL"
+      "value": "ALPHA-BOT-MD;alpha;https://i.imgur.com/nXqqjPL.jpg"
     },
     "PREFIX": {
       "description": "bot preifx  ., [.,!], false",
@@ -38,7 +38,7 @@
     "AUDIO_DATA": {
       "description": "audio metadata",
       "required": true,
-      "value": "ᴍᴜꜱɪᴄ;ᴋɪᴅ;https://imgur.com/nXqqjPL"
+      "value": "ᴍᴜꜱɪᴄ;ᴋɪᴅ;https://i.imgur.com/nXqqjPL.jpg"
     },
     "STICKER_DATA": {
       "description": "sticker data",
