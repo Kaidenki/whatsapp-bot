@@ -30,24 +30,24 @@ module.exports = {
   ERROR_MSG: toBool(process.env.ERROR_MSG || "true"),
   AJOIN: toBool(process.env.AJOIN || "false"),
   READ: process.env.READ || "false", //true, command
-  CHATBOT: process.env.CHATBOT || "false", //gc, gc2, gc3 , pm, pm2, pm3 not working
+  CHATBOT: process.env.CHATBOT || "false", //gc, gc2, gc3 , pm, pm2, pm3 not working currently
   CHATPX: process.env.CHATPX || "$", //prefix for chat bot leave null if you dont know what you are doing. not working
   REACT: process.env.REACT || "false", //true, command, emoji
   WARNCOUND: process.env.WARNCOUND || 3,
-  BOT_INFO: process.env.BOT_INFO || "Alpha-md;Cipher;https://i.pinimg.com/originals/36/26/ae/3626aea69e2d97c077b85f46d72e1131.jpg",
+  BOT_INFO: process.env.BOT_INFO || "Alpha-md;Cipher;https://imgur.com/nXqqjPL",
   WORKTYPE: process.env.WORKTYPE || "public",
   PREFIX: process.env.PREFIX || "#", //both  .  and [.] equal, for multi prefix we use [] this
   LANG: process.env.LANG || "en",
   PERSONAL_MESSAGE: process.env.PERSONAL_MESSAGE || "null",
   BOT_PRESENCE: process.env.BOT_PRESENCE || "composing",
-  AUDIO_DATA: process.env.AUDIO_DATA || "Alpha-md;Cipher;https://i.pinimg.com/originals/36/26/ae/3626aea69e2d97c077b85f46d72e1131.jpg",
+  AUDIO_DATA: process.env.AUDIO_DATA || "Alpha-md;Cipher;https://imgur.com/nXqqjPL",
   STICKER_DATA: process.env.STICKER_DATA || "Cipher;Alpha-md",
   BRAINSHOP: process.env.BRAINSHOP || "181291,oXUgTsTeOOxdYSle",
   SUDO: process.env.SUDO || "2349150690169, 2348114860536",
   RMBG_KEY: process.env.RMBG_KEY,
   OPEN_AI: process.env.OPEN_AI,
   ELEVENLABS: process.env.ELEVENLABS,
-  ALPHA_KEY: process.env.ALPHA_KEY || " ",// grt apikey from https://api.alpha-md.rf.gd/signup
+  ALPHA_KEY: process.env.ALPHA_KEY || " ",// get apikey from https://api.alpha-md.rf.gd/signup
   OCR_KEY: (process.env.OCR_KEY || "K84003107488957").trim(),
   DATABASE: DB_URL
     ? new Sequelize(DB_URL, {
