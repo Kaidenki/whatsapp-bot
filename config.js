@@ -32,13 +32,13 @@ module.exports = {
   READ: process.env.READ || "false", //true, command
   REACT: process.env.REACT || "false", //true, command, emoji
   WARNCOUND: process.env.WARNCOUND || 3,
-  BOT_INFO: process.env.BOT_INFO || "Alpha-md;Cipher;https://imgur.com/nXqqjPL",
+  BOT_INFO: process.env.BOT_INFO || "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg",
   WORKTYPE: process.env.WORKTYPE || "public",
   PREFIX: process.env.PREFIX || "#", //both  .  and [.] equal, for multi prefix we use [] this
   LANG: process.env.LANG || "en",
   PERSONAL_MESSAGE: process.env.PERSONAL_MESSAGE || "null",
   BOT_PRESENCE: process.env.BOT_PRESENCE || "composing",
-  AUDIO_DATA: process.env.AUDIO_DATA || "Alpha-md;Cipher;https://imgur.com/nXqqjPL",
+  AUDIO_DATA: process.env.AUDIO_DATA || "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg",
   STICKER_DATA: process.env.STICKER_DATA || "Cipher;Alpha-md",
   SUDO: process.env.SUDO || "2349150690169, 2348114860536",
   RMBG_KEY: process.env.RMBG_KEY,
