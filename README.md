@@ -31,12 +31,12 @@
 <a href='https://api.alpha-md.rf.gd/session/scan' target="_blank"><img alt='GET SESSION' src='https://img.shields.io/badge/SCAN-QR-100000?style=for-the-badge&logo=scan&logoColor=white&labelColor=black&color=black'/></a>
 
 ***
-### INFORMATION
-- Change owner info in [Config](https://chat.whatsapp.com/BGWpp9qySw81CGrqRM3ceg)
+### INFORMATION !(BOT WONT WORK WITHOUT THIS)
+- Get api key from  [Alpha api](https://api.alpha-md.rf.gd/signup)
 ### SUPPORT GROUP
 In case of support or any issues you can come here
 
-[![WhatsApp](https://img.shields.io/badge/alpha-md-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/FCfSLTySyqz1c7YPJD2KSm) 
+[![WhatsApp](https://img.shields.io/badge/alpha-md-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/BGWpp9qySw81CGrqRM3ceg) 
 
 ***
 
