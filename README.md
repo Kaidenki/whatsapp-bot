@@ -28,7 +28,7 @@
 ### GET SESSION ID
 - Click here to get your session id
    <br>
-<a href='https://qr-pair-zxyp.onrender.com/' target="_blank"><img alt='GET SESSION' src='https://img.shields.io/badge/GET SESSION-100000?style=for-the-badge&logo=scan&logoColor=white&labelColor=black&color=black'/></a>
+<a href='https://api.alpha-md.rf.gd/session/scan' target="_blank"><img alt='GET SESSION' src='https://img.shields.io/badge/SCAN-QR-100000?style=for-the-badge&logo=scan&logoColor=white&labelColor=black&color=black'/></a>
 
 ***
 ### INFORMATION
