@@ -9,7 +9,7 @@ const keysInrl = ['hjS2WBZ', 'QbfLgXT', 'dOd5DTh', 'free50_inrl', '5UYcKW6'];
 
 module.exports = {
   RKEY : keysInrl[Math.floor(keysInrl.length * Math.random())],
-  SESSION_ID: process.env.SESSION_ID || " ", //your ssid to run bot
+  SESSION_ID: process.env.SESSION_ID || "", //your ssid to run bot
   HEROKU: {
     API_KEY: process.env.HEROKU_API_KEY,
     APP_NAME: process.env.HEROKU_APP_NAME,
@@ -44,7 +44,7 @@ module.exports = {
   RMBG_KEY: process.env.RMBG_KEY,
   OPEN_AI: process.env.OPEN_AI,
   ELEVENLABS: process.env.ELEVENLABS,
-  ALPHA_KEY: process.env.ALPHA_KEY || " ",// get apikey from https://api.alpha-md.rf.gd/signup
+  ALPHA_KEY: process.env.ALPHA_KEY || "",// get apikey from https://api.alpha-md.rf.gd/signup
   OCR_KEY: (process.env.OCR_KEY || "K84003107488957").trim(),
   DATABASE: DB_URL
     ? new Sequelize(DB_URL, {

@@ -4,6 +4,8 @@ const {
 	getCompo,
 	sleep,
 	lang,
+	isAdmin,
+	isBotAdmin,
 	config
 } = require('../lib');
 const {
@@ -50,8 +52,8 @@ Alpha({
 	type: 'search',
 }, async (m, match) => {
 	match = match || m.reply_message.text
-	if (!match) return await m.send(lang.WHATSAPP.ISWA.NO_NUMBER.format(".iswa 920000000x"));
-	if (!match.match('x')) return await m.send(lang.WHATSAPP.ISWA.NOT_VALID.format(".iswa 920000000x"));
+	if (!match) return await m.send(lang.WHATSAPP.ISWA.NO_NUMBER.format(".iswa 2340000000x"));
+	if (!match.match('x')) return await m.send(lang.WHATSAPP.ISWA.NOT_VALID.format(".iswa 2340000000x"));
 	let xlength = match.replace(/[0-9]/gi, '')
 	if (xlength.length > 3) return await m.send(lang.WHATSAPP.ISWA.X_LENGTH)
 	let count = xlength.length == 3 ? 1000 : xlength.length == 2 ? 100 : 10;
@@ -108,8 +110,8 @@ Alpha({
 	type: 'search',
 }, async (m, match) => {
 	match = match || m.reply_message.text
-	if (!match) return await m.send(lang.WHATSAPP.NOWA.NO_NUMBER.format(".nowa 920000000x"));
-	if (!match.match('x')) return await m.send(lang.WHATSAPP.NOWA.NOT_VALID.format(".nowa 920000000x"));
+	if (!match) return await m.send(lang.WHATSAPP.NOWA.NO_NUMBER.format(".nowa 2340000000x"));
+	if (!match.match('x')) return await m.send(lang.WHATSAPP.NOWA.NOT_VALID.format(".nowa 2340000000x"));
 	let xlength = match.replace(/[0-9]/gi, '')
 	if (xlength.length > 3) return await m.send(lang.WHATSAPP.NOWA.X_LENGTH)
 	let count = xlength.length == 3 ? 1000 : xlength.length == 2 ? 100 : 10;
