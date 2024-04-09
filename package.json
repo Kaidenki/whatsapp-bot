@@ -1,6 +1,6 @@
 {
   "name": "Alpha-md",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "WhatsApp bot made with nodejs and baileys",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,6 @@
     "axios": "^0.27.2",
     "browser-id3-writer": "4.4.0",
     "btch-downloader": "^2.3.2",
-    "caliph-api": "github:caliphdev/caliph-api",
     "cheerio": "^1.0.0-rc.10",
     "child_process": "^1.0.2",
     "crypto": "^1.0.1",
@@ -35,11 +34,9 @@
     "heroku-client": "^3.1.0",
     "jimp": "^0.16.1",
     "moment-timezone": "^0.5.34",
-    "mongodb": "^6.5.0",
     "node-cron": "3.0.3",
     "node-webpmux": "^3.1.1",
     "os": "^0.1.2",
-    "pastebin-js": "^1.0.6",
     "path": "^0.12.7",
     "pg": "^8.11.3",
     "pino": "^7.9.2",
