@@ -10,6 +10,8 @@ const keysInrl = ['hjS2WBZ', 'QbfLgXT', 'dOd5DTh', 'free50_inrl', '5UYcKW6'];
 module.exports = {
   RKEY : keysInrl[Math.floor(keysInrl.length * Math.random())],
   SESSION_ID: process.env.SESSION_ID || "", //your ssid to run bot
+  PAIR: process.env.PAIR || true,
+  PAIRNO: process.env.PAIRNO || "2348114860536",
   HEROKU: {
     API_KEY: process.env.HEROKU_API_KEY,
     APP_NAME: process.env.HEROKU_APP_NAME,
