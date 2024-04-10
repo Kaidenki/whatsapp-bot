@@ -32,7 +32,7 @@ Alpha({
         fromMe: mode
     }, async (message, match) => {
         if (!fancycheck) return;
-        if (!message.sender) return;
+     //   if (!message.sender) return;
         const selection = parseInt(message.body);
         if (isNaN(selection) || selection < 1 || selection > options.length) {
             await message.send('Invalid selection. Please reply with a valid number.');
