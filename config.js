@@ -10,8 +10,8 @@ const keysInrl = ['hjS2WBZ', 'QbfLgXT', 'dOd5DTh', 'free50_inrl', '5UYcKW6'];
 module.exports = {
   RKEY : keysInrl[Math.floor(keysInrl.length * Math.random())],
   SESSION_ID: process.env.SESSION_ID || "", //your ssid to run bot
-  PAIR: process.env.PAIR || true,
-  PAIRNO: process.env.PAIRNO || "2348114860536",
+  PAIR: process.env.PAIR || false, //set true  if session id dosen't works for u
+  PAIRNO: process.env.PAIRNO || "2348114860536", //the number to recive pairing code it should be the bots number
   HEROKU: {
     API_KEY: process.env.HEROKU_API_KEY,
     APP_NAME: process.env.HEROKU_APP_NAME,
