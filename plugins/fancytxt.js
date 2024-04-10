@@ -11,7 +11,7 @@ Alpha({
 }, async (message, match) => {
     if (!match) return await message.reply('_please can you provide me a text_');
     const res = await getJson(`${config.BASE_URL}api/tools/styletext?text=${match}&apikey=${config.ALPHA_KEY}`);
-    if (!res.status) return await message.reply(`*Failed to fetch fancy text options.*\n*please make sure i'ts plain text*\n*`);
+    if (!res.status) return await message.reply(`*Failed to fetch fancy text options.*\n*please make sure i'ts plain text*`);
     
     const options = res.result;
     if (options.length === 0) return await message.reply('*No fancy text options available.*');
