@@ -55,7 +55,7 @@ Alpha({
     fromMe: mode
 }, async (message, match) => {
     if (!listeningForSAPK) return;
-    if (!message.sender) return;
+   // if (!message.sender) return;
     if (selectedAppInfo && selectedAppInfo.length > 0 && !isNaN(parseInt(message.body))) {
         const selection = parseInt(message.body)
         if (selection === 0) { 
