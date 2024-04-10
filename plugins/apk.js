@@ -55,7 +55,8 @@ Alpha({
     fromMe: mode
 }, async (message, match) => {
     if (!listeningForSAPK) return;
-   // if (!message.sender) return;
+    if (!message.reply_message?.fromMe || !message.reply_message?.text) return;
+    if (!message.reply_message.text.includes('*Reply with the number to download the corresponding APK file.*\n*or use 0 to cancel download*')) return;
     if (selectedAppInfo && selectedAppInfo.length > 0 && !isNaN(parseInt(message.body))) {
         const selection = parseInt(message.body)
         if (selection === 0) { 
