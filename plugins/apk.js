@@ -40,11 +40,11 @@ Alpha({
     if (!res.status) return await message.send('No results found.');
     const results = res.result;
     if (results.length === 0) return await message.send('No results found.');
-    let replyMsg = '*Search Results:*\n\n';
+    let replyMsg = '*Search Results:*\n';
     results.forEach((app, index) => {
         replyMsg += `${index + 1}. ${app.name}\n`;
     });
-    replyMsg += '\n*Reply with the number to download the corresponding APK file.*\n*or use 0 to cancel download*';
+    replyMsg += '*Reply with the number to download the corresponding APK file.*\n*or use 0 to cancel download*';
     await message.send(replyMsg);
     listeningForSAPK = true;
     selectedAppInfo = results;
