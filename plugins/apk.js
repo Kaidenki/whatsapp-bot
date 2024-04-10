@@ -15,7 +15,7 @@ Alpha({
 		await new Promise(resolve => setTimeout(resolve, 1000));
 		await message.sendReply(res.result.icon, { caption: `*Name*: \`${res.result.name}\`\n*Updated*: ${res.result.lastup}\n*Package*: ${res.result.package}\n*Size*: ${res.result.size}` }, 'image');
 		await new Promise(resolve => setTimeout(resolve, 1000));
-		return await message.reply({
+		return await message.send({
 			url: res.result.dllink
 		}, {
 			mimetype: `application/vnd.android.package-archive`,
@@ -73,7 +73,7 @@ Alpha({
                 caption: `*Name*: \`${selectedApp.name}\`\n*Package*: \`${selectedApp.id}\``
             }, 'image');
             await new Promise(resolve => setTimeout(resolve, 1000));
-            await message.reply({
+            await message.send({
                 url: downloadRes.result.dllink
             }, {
                 mimetype: 'application/vnd.android.package-archive',
@@ -82,7 +82,7 @@ Alpha({
             listeningForSAPK = false;
             selectedAppInfo = null;
         } else {
-            await message.reply("*Invalid selection. Please enter a valid number. Please enter a number from 1 to ${selectedAppInfo.length}.*");
+            await message.reply(`*Invalid selection. Please enter a valid number. Please enter a number from 1 to ${selectedAppInfo.length}.*`);
         }
     }
 });
