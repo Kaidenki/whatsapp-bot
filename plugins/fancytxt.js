@@ -11,7 +11,7 @@ Alpha({
 }, async (message, match) => {
     if (!match) return await message.reply('_please can you provide me a text_');
     const res = await getJson(`${config.BASE_URL}api/tools/styletext?text=${match}&apikey=${config.ALPHA_KEY}`);
-    if (!res.status) return await message.reply(`*Failed to fetch fancy text options.*\n*please make sure i'ts plain text*`);
+    if (!res.status) return await message.reply(`*Failed to fetch fancy text options.*\n*please make sure i'ts plain text*\n*`);
     
     const options = res.result;
     if (options.length === 0) return await message.reply('*No fancy text options available.*');
@@ -33,7 +33,8 @@ Alpha({
         fromMe: mode
     }, async (message, match) => {
         if (!fancycheck) return;
-      //  if (!message.sender) return;
+        if (!message.reply_message?.fromMe || !message.reply_message?.text) return;
+        if (!message.reply_message.text.includes('*Reply with the number of your desired fancy text.*\n*or 0 to cancel.*')) return;
         const selection = parseInt(message.body);
         if (isNaN(selection) || selection < 1 || selection > options.length) {
             await message.reply('Invalid selection. Please reply with a valid number.');
