@@ -45,7 +45,7 @@ Alpha({
             const timeLimitInSeconds = getTimeLimitInSeconds(difficulty);
             const startTime = Date.now();
             currentGame = new MathGame(question, answer, startTime, timeLimitInSeconds);
-            await message.reply(`*Here's your math question:*\n\n${question}\n\nYou have *${timeLimitInSeconds} seconds* to answer.`);
+            await message.reply(`*Here's your math question:*\n\n${question}\n\nYou have *${timeLimitInSeconds} seconds* to reply with correct math answer.`);
             setTimeout(() => {
                 if (currentGame && currentGame.status) {
                     message.reply(`Time's up! The correct answer is *${currentGame.answer}*. You failed to answer in time.`);
@@ -62,18 +62,21 @@ Alpha({
 Alpha({
     on: 'text',
     fromMe: mode
-}, async (m, match) => {
-    if (currentGame && currentGame.status && !isNaN(parseInt(m.body))) {
-        const userAnswer = parseInt(m.body);
+}, async (message, match) => {
+    
+    if (!message.reply_message?.fromMe || !message.reply_message?.text) return;
+    if (!message.reply_message.text.includes('to reply with correct math answer.')) return;
+    if (currentGame && currentGame.status && !isNaN(parseInt(message.body))) {
+        const userAnswer = parseInt(message.body);
         if (currentGame.isCorrectAnswer(userAnswer)) {
-            await m.reply('Congratulations! You answered correctly!');
+            await message.reply('Congratulations! You answered correctly!');
             currentGame.endGame();
         } else if (currentGame.isTimeUp()) {
-            await m.reply(`Time's up! The correct answer is *${currentGame.answer}*. You failed to answer in time.`);
+            await message.reply(`Time's up! The correct answer is *${currentGame.answer}*. You failed to answer in time.`);
             currentGame.endGame();
         } else {
             const timeRemaining = currentGame.getTimeRemaining();
-            await m.reply(`Incorrect answer. \n*you have ${timeRemaining} seconds remaining.*`);
+            await message.reply(`Incorrect answer. \n*you have ${timeRemaining} seconds remaining.*`);
         }
     }
 });
