@@ -84,6 +84,16 @@
       "description": "send error messages to bot number",
       "required": true,
       "value": "true"
+    },
+    "PAIR": {
+      "description": "set true if session id doesn't work for you",
+      "required": true,
+      "value": "false"
+    },
+    "PAIRNO": {
+      "description": "the number to receive pairing code; it should be the bot's number",
+      "required": true,
+      "value": " "
     }
   },
   "addons": [
@@ -91,7 +101,7 @@
       "plan": "heroku-postgresql"
     }
   ],
-"buildpacks": [
+  "buildpacks": [
     {
       "url": "heroku/nodejs"
     },
@@ -101,5 +111,5 @@
     {
       "url": "https://github.com/clhuang/heroku-buildpack-webp-binaries.git"
     }
-]
+  ]
 }
