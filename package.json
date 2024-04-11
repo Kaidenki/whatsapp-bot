@@ -4,7 +4,7 @@
   "description": "WhatsApp bot made with nodejs and baileys",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "pm2 start . --attach --name alpha",
     "stop": "pm2 stop alpha"
   },
   "repository": {
