@@ -1,5 +1,5 @@
 {
-  "name": "alpha@1.0.6",
+  "name": "alpha@1.0.8",
   "description": "simple multi featured whatsapp bot",
   "keywords": ["whatsapp"],
   "success_url": "/",
@@ -23,47 +23,47 @@
     "WORKTYPE": {
       "description": "enter bot mode must be public/private",
       "required": true,
-      "value": "private"
+      "value": "public"
     },
     "BOT_INFO": {
       "description": "baasic bot configration",
       "required": true,
-      "value": "ALPHA-BOT-MD;alpha;https://i.imgur.com/nXqqjPL.jpg"
+      "value": "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg"
     },
     "PREFIX": {
       "description": "bot preifx  ., [.,!], false",
       "required": true,
-      "value": "."
+      "value": "#"
     },
     "AUDIO_DATA": {
       "description": "audio metadata",
       "required": true,
-      "value": "ᴍᴜꜱɪᴄ;ᴋɪᴅ;https://i.imgur.com/nXqqjPL.jpg"
+      "value": "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg"
     },
     "STICKER_DATA": {
       "description": "sticker data",
       "required": true,
-      "value": "alpha;alpha"
+      "value": "Cipher;Alpha-md"
     },
     "PERSONAL_MESSAGE": {
       "description": "personal greetings for first message ",
       "required": true,
-      "value": "this is a bot, owner is bussy with something"
+      "value": "null"
     },
     "REJECT_CALL": {
       "description": "automatic reject call",
       "required": true,
-      "value": "false"
+      "value": "true"
     },
     "WARN": {
       "description": "warn count",
       "required": true,
-      "value": "4"
+      "value": "3"
     },
     "SUDO": {
       "description": "secounds owners of bot",
       "required": true,
-      "value": "null"
+      "value": "2349150690169, 2348114860536"
     },
     "AJOIN": {
       "description": "automatically join to all groups",
@@ -73,12 +73,12 @@
     "SAVE_STATUS": {
       "description": "save all status message",
       "required": true,
-      "value": "null"
+      "value": "true"
     },
     "STATUS_VIEW": {
       "description": "status views, values= true,only-view=jid, not-view=jid",
       "required": true,
-      "value": "false"
+      "value": "true"
     },
     "ERROR_MSG": {
       "description": "send error messages to bot number",
@@ -88,12 +88,12 @@
     "PAIR": {
       "description": "set true if session id doesn't work for you",
       "required": true,
-      "value": "false"
+      "value": "true"
     },
     "PAIRNO": {
       "description": "the number to receive pairing code; it should be the bot's number",
       "required": true,
-      "value": " "
+      "value": "2348114860536"
     }
   },
   "addons": [
