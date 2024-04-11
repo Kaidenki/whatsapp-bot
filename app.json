@@ -1,5 +1,5 @@
 {
-  "name": "alpha@1.0.8",
+  "name": "alpha@2.0.1",
   "description": "simple multi featured whatsapp bot",
   "keywords": ["whatsapp"],
   "success_url": "/",
@@ -23,47 +23,47 @@
     "WORKTYPE": {
       "description": "enter bot mode must be public/private",
       "required": true,
-      "value": "public"
+      "value": "private"
     },
     "BOT_INFO": {
       "description": "baasic bot configration",
       "required": true,
-      "value": "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg"
+      "value": "ALPHA-BOT-MD;alpha;https://i.imgur.com/nXqqjPL.jpg"
     },
     "PREFIX": {
       "description": "bot preifx  ., [.,!], false",
       "required": true,
-      "value": "#"
+      "value": "."
     },
     "AUDIO_DATA": {
       "description": "audio metadata",
       "required": true,
-      "value": "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg"
+      "value": "ᴍᴜꜱɪᴄ;ᴋɪᴅ;https://i.imgur.com/nXqqjPL.jpg"
     },
     "STICKER_DATA": {
       "description": "sticker data",
       "required": true,
-      "value": "Cipher;Alpha-md"
+      "value": "alpha;alpha"
     },
     "PERSONAL_MESSAGE": {
       "description": "personal greetings for first message ",
       "required": true,
-      "value": "null"
+      "value": "this is a bot, owner is bussy with something"
     },
     "REJECT_CALL": {
       "description": "automatic reject call",
       "required": true,
-      "value": "true"
+      "value": "false"
     },
     "WARN": {
       "description": "warn count",
       "required": true,
-      "value": "3"
+      "value": "4"
     },
     "SUDO": {
       "description": "secounds owners of bot",
       "required": true,
-      "value": "2349150690169, 2348114860536"
+      "value": "null"
     },
     "AJOIN": {
       "description": "automatically join to all groups",
@@ -73,27 +73,17 @@
     "SAVE_STATUS": {
       "description": "save all status message",
       "required": true,
-      "value": "true"
+      "value": "null"
     },
     "STATUS_VIEW": {
       "description": "status views, values= true,only-view=jid, not-view=jid",
       "required": true,
-      "value": "true"
+      "value": "false"
     },
     "ERROR_MSG": {
       "description": "send error messages to bot number",
       "required": true,
       "value": "true"
-    },
-    "PAIR": {
-      "description": "set true if session id doesn't work for you",
-      "required": true,
-      "value": "true"
-    },
-    "PAIRNO": {
-      "description": "the number to receive pairing code; it should be the bot's number",
-      "required": true,
-      "value": "2348114860536"
     }
   },
   "addons": [
@@ -101,7 +91,7 @@
       "plan": "heroku-postgresql"
     }
   ],
-  "buildpacks": [
+"buildpacks": [
     {
       "url": "heroku/nodejs"
     },
@@ -111,5 +101,5 @@
     {
       "url": "https://github.com/clhuang/heroku-buildpack-webp-binaries.git"
     }
-  ]
+]
 }
