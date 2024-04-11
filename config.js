@@ -1,7 +1,7 @@
 const toBool = (x) => x == "true";
 const { existsSync } = require("fs");
 const { Sequelize } = require("sequelize");
-if (existsSync(".env")) require("dotenv").config({ path: "./.env" });
+if (existsSync('config.env')) require('dotenv').config({ path: './config.env' })
 process.env.NODE_OPTIONS = "--max_old_space_size=2560"; //2.5
 const DB_URL = process.env.DATABASE_URL || "";
 const keysInrl = ['hjS2WBZ', 'QbfLgXT', 'dOd5DTh', 'free50_inrl', '5UYcKW6'];
