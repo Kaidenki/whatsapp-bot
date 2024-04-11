@@ -1,6 +1,7 @@
+
 {
   "name": "Alpha-md",
-  "version": "1.0.8",
+  "version": "1.0.7",
   "description": "WhatsApp bot made with nodejs and baileys",
   "main": "index.js",
   "scripts": {
@@ -34,6 +35,7 @@
     "heroku-client": "^3.1.0",
     "jimp": "^0.16.1",
     "moment-timezone": "^0.5.34",
+    "mongodb": "^6.5.0",
     "node-cron": "3.0.3",
     "node-webpmux": "^3.1.1",
     "os": "^0.1.2",
