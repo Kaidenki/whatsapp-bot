@@ -159,9 +159,7 @@ const WhatsBotConnect = async () => {
   try {
     console.log("Syncing Database");
     await config.DATABASE.sync();
-    const { state, saveCreds } = await useMultiFileAuthState(
-      __dirname + "/auth_info_baileys",
-    );
+   const { state, saveCreds } = await useMultiFileAuthState("./auth_info_baileys");
     let conn;
     if (config.PAIR === false) {
         conn = await WASocket({
@@ -232,7 +230,6 @@ const WhatsBotConnect = async () => {
     conn.ev.on("connection.update", async ({ connection }) => {
       if (connection == "connecting"){
         console.log("– Connecting to WhatsApp...");
-         await sleep(3000)
         }
       else if (connection == "open") {
         const { ban, plugins, toggle, sticker_cmd, shutoff, login } =
