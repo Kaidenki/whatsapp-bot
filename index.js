@@ -1,3 +1,4 @@
+
 const donPm = new Set();
 const set_of_filters = new Set();
 const fs = require("fs");
@@ -8,7 +9,6 @@ const {
   useMultiFileAuthState,
   makeInMemoryStore,
   jidNormalizedUser,
-  makeCacheableSignalKeyStore,
   proto,
   Browsers,
   getAggregateVotesInPollMessage,
@@ -133,7 +133,6 @@ store.poll_message = {
 };
 
 const WhatsBotConnect = async () => {
-    if (config.PAIR !== true) {
  console.log("generating session!!");
   if (!config.SESSION_ID) {
 		console.log('please provide a session id in config.js\n\nscan from Alpha server');
@@ -152,68 +151,33 @@ const WhatsBotConnect = async () => {
      const sessionId = config.SESSION_ID; 
      const folderPath = 'auth_info_baileys';
      fetchSession(sessionId, folderPath);
-    } else {
-        console.log("Skipping fetchSession function.\nusing paircode instead");
-    }
-    await sleep(2000);
+  await sleep(5000);
   try {
     console.log("Syncing Database");
     await config.DATABASE.sync();
-   const { state, saveCreds } = await useMultiFileAuthState("./auth_info_baileys");
-    let conn;
-    if (config.PAIR === false) {
-        conn = await WASocket({
-            logger: pino({ level: "fatal" }),
-            printQRInTerminal: true,
-            browser: ["Alpha", "safari", "1.0.0"],
-            fireInitQueries: false,
-            shouldSyncHistoryMessage: false,
-            downloadHistory: false,
-            syncFullHistory: false,
-            auth: state,
-            generateHighQualityLinkPreview: true,
-            getMessage: async (key) => {
-                if (store) {
-                    const msg = await store.loadMessage(key.remoteJid, key.id);
-                    return msg.message || undefined;
-                }
-                return {
-                    conversation: "Hi Im Alpha-md",
-                };
-            },
-        });
-    } else {
-        const NodeCache = require("node-cache")
-        const msgRetryCounterCache = new NodeCache() 
-        conn = await WASocket({
-            logger: pino({ level: 'silent' }),
-            printQRInTerminal: false, // popping up QR in terminal log
-            browser: Browsers.windows('Firefox'), // for this issues https://github.com/WhiskeySockets/Baileys/issues/328
-            auth: {
-                creds: state.creds,
-                keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" })),
-            },
-            markOnlineOnConnect: true, // set false for offline
-            generateHighQualityLinkPreview: true, // make high preview link
-            getMessage: async (key) => {
-                let jid = jidNormalizedUser(key.remoteJid)
-                let msg = await store.loadMessage(jid, key.id)
-        
-                return msg?.message || ""
-            },
-            msgRetryCounterCache, // Resolve waiting messages
-            defaultQueryTimeoutMs: undefined, // for this issues https://github.com/WhiskeySockets/Baileys/issues/276
-        })
-    }    
-      // login use pairing code
-   // source code https://github.com/WhiskeySockets/Baileys/blob/master/Example/example.ts#L61
-   if (!conn.authState.creds.registered) {
-    setTimeout(async () => {
-        let code = await conn.requestPairingCode(config.PAIRNO)
-        code = code?.match(/.{1,4}/g)?.join("-") || code
-        console.log(`Your Pairing Code : `, code)
-     }, 3000)
-  }
+    const { state, saveCreds } = await useMultiFileAuthState(
+      __dirname + "/auth_info_baileys",
+    );
+    let conn = await WASocket({
+      logger: pino({ level: "fatal" }),
+      printQRInTerminal: true,
+      browser: ["Alpha", "safari", "1.0.0"],
+      fireInitQueries: false,
+      shouldSyncHistoryMessage: false,
+      downloadHistory: false,
+      syncFullHistory: false,
+      auth: state,
+      generateHighQualityLinkPreview: true,
+      getMessage: async (key) => {
+        if (store) {
+          const msg = await store.loadMessage(key.remoteJid, key.id);
+          return msg.message || undefined;
+        }
+        return {
+          conversation: "Hi Im Alpha-md",
+        };
+      },
+    });
     conn.ev.on("creds.update", saveCreds);
     store.bind(conn.ev);
     if (!conn.wcg) conn.wcg = {};
@@ -228,9 +192,8 @@ const WhatsBotConnect = async () => {
     }
     conn = new WAConnection(conn);
     conn.ev.on("connection.update", async ({ connection }) => {
-      if (connection == "connecting"){
+      if (connection == "connecting")
         console.log("– Connecting to WhatsApp...");
-        }
       else if (connection == "open") {
         const { ban, plugins, toggle, sticker_cmd, shutoff, login } =
           await personalDB(
@@ -2552,7 +2515,7 @@ const WhatsBotConnect = async () => {
 │ User :-@${m.number}
 ❏────────────────❏
 ┏────── INFO ──────❏
-│ Reason :- _Links Not allowed in this group_
+│ Reason :- null!!!
 │ Count :- ${count}
 │ Remaining :- ${remains}
 ┗•───────────────❏`;
@@ -2634,7 +2597,7 @@ const WhatsBotConnect = async () => {
 │ User :-@${m.number}
 ❏────────────────❏
 ┏────── INFO ──────❏
-│ Reason :- _Bot Not allowed in this group_
+│ Reason :- null!!!
 │ Count :- ${count}
 │ Remaining :- ${remains}
 ┗•───────────────❏`;
@@ -2721,7 +2684,7 @@ const WhatsBotConnect = async () => {
 │ User :-@${m.number}
 ❏────────────────❏
 ┏─────── INFO ─────❏
-│ Reason :- badword detected!!!
+│ Reason :- null!!!
 │ Count :- ${count}
 │ Remaining :- ${remains}
 ┗•───────────────❏`;
