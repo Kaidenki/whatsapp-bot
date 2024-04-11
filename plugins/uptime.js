@@ -1,7 +1,7 @@
 const { runtime } = require("../lib/main/func");
-const { Alpha, mode } = require("../lib");
-const imgurl = 'https://i.pinimg.com/originals/36/26/ae/3626aea69e2d97c077b85f46d72e1131.jpg'
-
+const { Alpha, mode, config } = require("../lib");
+const info = config.BOT_INFO
+const parts = info.split(';')
 
 Alpha(
   {
@@ -12,15 +12,20 @@ Alpha(
   },
   async (message, match) => {
     const upt = runtime(process.uptime());
+    const uptt = `Beep boop... System status: Fully operational!\n*Current uptime: ${upt}*`;
 
-    await message.send(
-      {
-        url: imgurl,
-      },
-      {
-        caption: `Beep boop... System status: Fully operational!\n*Current uptime: ${upt}*`,
-      },
-      "image",
-    );
+    let fileType = 'unknown';
+
+    if (parts[2].endsWith('.jpg') || parts[2].endsWith('.png')) {
+      fileType = 'image';
+    } else if (parts[2].endsWith('.mp4')) {
+      fileType = 'video';
+    } 
+
+    if (fileType === 'image') {
+      await message.send({ url: parts[2] }, { caption: uptt }, "image");
+    } else if (fileType === 'video') {
+      await message.sendReply(parts[2], { caption: uptt }, 'video');
+    }
   },
 );
