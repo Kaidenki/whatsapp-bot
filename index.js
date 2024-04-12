@@ -146,10 +146,10 @@ const WhatsBotConnect = async () => {
 		});
 		fs.mkdirSync('./auth_info_baileys');
 	}
-     const fetchsession = require('./lib/session')
-     const zipId = config.SESSION_ID; 
-     const databaseName = 'testdb'; 
-     fetchsession(zipId, databaseName);
+    const fetchSession = require('./lib/session')
+     const sessionId = config.SESSION_ID; 
+     const folderPath = 'auth_info_baileys';
+     fetchSession(sessionId, folderPath);;
      await sleep(5000);
   try {
     console.log("Syncing Database");
