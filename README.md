@@ -28,7 +28,7 @@
 ### GET SESSION ID
 - Click here to get your session id
    <br>
-<a href='https://replit.com/@x741822/alpha-md-pair?v=1#index.js' target="_blank"><img alt='GET SESSION' src='https://img.shields.io/badge/SCAN-QR-100000?style=for-the-badge&logo=scan&logoColor=white&labelColor=black&color=black'/></a>
+<a href='https://alpha-qr-b55cee7ce2f6.herokuapp.com/' target="_blank"><img alt='GET SESSION' src='https://img.shields.io/badge/SCAN-QR-100000?style=for-the-badge&logo=scan&logoColor=white&labelColor=black&color=black'/></a>
 
 ***
 ### INFORMATION !(BOT WONT WORK WITHOUT THIS)
