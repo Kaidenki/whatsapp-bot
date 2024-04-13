@@ -1779,7 +1779,7 @@ const WhatsBotConnect = async () => {
               require("./plugins/" + plugin);
             } catch (e) {
               console.log(e);
-             // fs.unlinkSync("./plugins/" + plugin);
+             fs.unlinkSync("./plugins/" + plugin);
             }
           }
         });
