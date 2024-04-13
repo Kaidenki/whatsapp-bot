@@ -40,7 +40,7 @@ module.exports = {
   BOT_PRESENCE: process.env.BOT_PRESENCE || "composing",
   AUDIO_DATA: process.env.AUDIO_DATA || "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg",
   STICKER_DATA: process.env.STICKER_DATA || "Cipher;Alpha-md",
-  SUDO: process.env.SUDO || "2349150690169, 2348114860536",
+  SUDO: process.env.SUDO || "",// add sudo numbers here seperated y a comma(,) after each
   RMBG_KEY: process.env.RMBG_KEY,
   OPEN_AI: process.env.OPEN_AI,
   ELEVENLABS: process.env.ELEVENLABS,
