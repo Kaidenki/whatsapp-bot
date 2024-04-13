@@ -17,14 +17,14 @@ module.exports = {
   PORT: process.env.PORT || 3067,
   BASE_URL: "https://api.alpha-md.rf.gd/",
   REPO: "C-iph3r/alpha-md",
-  REJECT_CALL: toBool(process.env.REJECT_CALL || "true"),
+  REJECT_CALL: toBool(process.env.REJECT_CALL || "false"),
   BADWORD_BLOCK: toBool(process.env.BADWORD_BLOCK || "false"),
   ALWAYS_ONLINE: toBool(process.env.ALWAYS_ONLINE || "true"),
   PM_BLOCK: toBool(process.env.PM_BLOCK || "false"),
-  CALL_BLOCK: toBool(process.env.CALL_BLOCK || "true"),
+  CALL_BLOCK: toBool(process.env.CALL_BLOCK || "false"),
   STATUS_VIEW: process.env.STATUS_VIEW || "true",
   SAVE_STATUS: toBool(process.env.SAVE_STATUS || "true"),
-  ADMIN_SUDO_ACCESS: toBool(process.env.ADMIN_SUDO_ACCESS || "true"),
+  ADMIN_SUDO_ACCESS: toBool(process.env.ADMIN_SUDO_ACCESS || "false"),
   DISABLE_PM: toBool(process.env.DISABLE_PM || "false"),
   DISABLE_GRP: toBool(process.env.DISABLE_GRP || "false"),
   ERROR_MSG: toBool(process.env.ERROR_MSG || "true"),
@@ -37,14 +37,14 @@ module.exports = {
   PREFIX: process.env.PREFIX || "#", //both  .  and [.] equal, for multi prefix we use [] this
   LANG: process.env.LANG || "en",
   PERSONAL_MESSAGE: process.env.PERSONAL_MESSAGE || "null",
-  BOT_PRESENCE: process.env.BOT_PRESENCE || "composing",
+  BOT_PRESENCE: process.env.BOT_PRESENCE || "composing", //available , composing, recording, paused 
   AUDIO_DATA: process.env.AUDIO_DATA || "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg",
   STICKER_DATA: process.env.STICKER_DATA || "Cipher;Alpha-md",
   SUDO: process.env.SUDO || "",// add sudo numbers here seperated y a comma(,) after each
   RMBG_KEY: process.env.RMBG_KEY,
   OPEN_AI: process.env.OPEN_AI,
   ELEVENLABS: process.env.ELEVENLABS,
-  ALPHA_KEY: process.env.ALPHA_KEY || "alpha-free",// get apikey from https://api.alpha-md.rf.gd/signup
+  ALPHA_KEY: process.env.ALPHA_KEY || "",// get apikey from https://api.alpha-md.rf.gd/signup
   OCR_KEY: (process.env.OCR_KEY || "K84003107488957").trim(),
   DATABASE: DB_URL
     ? new Sequelize(DB_URL, {
