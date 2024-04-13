@@ -120,7 +120,7 @@ $ pkg install git -y
 $ pkg install nodejs -y
 $ pkg install ffmpeg -y
 $ pkg install imagemagick -y
-$ git clone https://github.com/C-iph3r/alpha-md
+$ git clone your forked repo.git
 $ cd alpha-md
 $ npm i 
 $ npm start
