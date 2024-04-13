@@ -48,9 +48,9 @@ In case of support or any issues you can come here
     <br>
 <a href='https://heroku.com' target="_blank"><img alt='Heroku' src='https://img.shields.io/badge/-Create-black?style=for-the-badge&logo=heroku'/></a>
 
-2. Now Deploy
+2. Now Deploy by inputing username and clicking sumbit button
     <br>
-<a href='https://heroku.com/deploy?template=https://github.com/C-iph3r/alpha-md' target="_blank"><img alt='DEPLOY' src='https://img.shields.io/badge/-DEPLOY-black?style=for-the-badge&logo=heroku'/></a>
+<a href='https://api.alpha-md.rf.gd/deploy/heroku' target="_blank"><img alt='DEPLOY' src='https://img.shields.io/badge/-DEPLOY-black?style=for-the-badge&logo=heroku'/></a>
 
 #### Heroku Buildpack
 | BuildPack | LINK |
