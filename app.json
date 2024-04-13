@@ -28,7 +28,7 @@
     "BOT_INFO": {
       "description": "baasic bot configration",
       "required": true,
-      "value": "ALPHA-BOT-MD;alpha;https://i.imgur.com/nXqqjPL.jpg"
+      "value": "alpha-md;alpha;https://i.imgur.com/nXqqjPL.jpg"
     },
     "PREFIX": {
       "description": "bot preifx  ., [.,!], false",
@@ -38,17 +38,17 @@
     "AUDIO_DATA": {
       "description": "audio metadata",
       "required": true,
-      "value": "ᴍᴜꜱɪᴄ;ᴋɪᴅ;https://i.imgur.com/nXqqjPL.jpg"
+      "value": "alpha;c-iph3r;https://i.imgur.com/nXqqjPL.jpg"
     },
     "STICKER_DATA": {
       "description": "sticker data",
       "required": true,
-      "value": "alpha;alpha"
+      "value": "alpha;c-iph3r"
     },
     "PERSONAL_MESSAGE": {
       "description": "personal greetings for first message ",
       "required": true,
-      "value": "this is a bot, owner is bussy with something"
+      "value": "this is a bot, owner is curently bussy with something"
     },
     "REJECT_CALL": {
       "description": "automatic reject call",
@@ -61,7 +61,7 @@
       "value": "4"
     },
     "SUDO": {
-      "description": "secounds owners of bot",
+      "description": "second or tempory owners of bot",
       "required": true,
       "value": "null"
     },
@@ -73,7 +73,7 @@
     "SAVE_STATUS": {
       "description": "save all status message",
       "required": true,
-      "value": "null"
+      "value": ""
     },
     "STATUS_VIEW": {
       "description": "status views, values= true,only-view=jid, not-view=jid",
