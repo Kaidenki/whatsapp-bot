@@ -1,13 +1,10 @@
 const simpleGit = require("simple-git");
 const git = simpleGit();
-const exec = require("child_process").exec;
 const Heroku = require("heroku-client");
-const axios = require("axios");
-const { PassThrough } = require("stream");
 const heroku = new Heroku({
   token: process.env.HEROKU_API_KEY,
 });
-const { Alpha, GenListMessage, lang } = require("../lib");
+const { Alpha, lang } = require("../lib");
 
 Alpha(
   {
@@ -77,9 +74,9 @@ Alpha(
       if (commits.total === 0) {
         return await message.send(lang.HEROKU.ALLREDY);
       } else {
-        let C-iph3rupdate = lang.HEROKU.LIST_UPDATE;
+        let Ciph3rupdate = lang.HEROKU.LIST_UPDATE;
         commits["all"].map((commit) => {
-          C-iph3rupdate +=
+          Ciph3rupdate +=
             "```" +
             lang.HEROKU.COMMITS.format(
               commit.date.substring(0, 10),
