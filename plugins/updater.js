@@ -85,7 +85,7 @@ Alpha(
             ) +
             "```\n\n";
         });
-        return await message.send(C-iph3rupdate);
+        return await message.send(Ciph3rupdate);
       }
     }
   },
