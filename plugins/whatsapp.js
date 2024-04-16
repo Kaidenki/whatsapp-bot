@@ -422,7 +422,8 @@ Alpha({
 })
 
 Alpha({ 
-    on: 'all', 
+    on: 'all',
+   dontAddCommandList: true,
     pattern: 'anti_view_once' 
 }, 
       async (m) => {
@@ -436,6 +437,7 @@ Alpha({
 Alpha({
   pattern: 'save|upload|upl|sav',
   fromMe: true,
+  dontAddCommandList: true,
   desc: 'saves whatsapp status',
   type: 'whatsapp',
   DismissPrefix: true
