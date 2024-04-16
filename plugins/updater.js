@@ -40,7 +40,7 @@ Alpha(
       );
     } else if (message.text.includes("now")) {
       await git.fetch();
-      let commits = await git.log(["master" + "..origin/" + "master"]);
+      let commits = await git.log(["main" + "..origin/" + "main"]);
       if (commits.total === 0) {
         return await message.send(lang.HEROKU.ALLREDY);
       } else {
@@ -56,7 +56,7 @@ Alpha(
           );
           process.exit(0);
         }
-        git.fetch("upstream", "master");
+        git.fetch("upstream", "main");
         git.reset("hard", ["FETCH_HEAD"]);
         const app = await heroku.get("/apps/" + process.env.HEROKU_APP_NAME);
         const git_url = app.git_url.replace(
@@ -68,18 +68,18 @@ Alpha(
         } catch (e) {
           console.log(e);
         }
-        await git.push("heroku", "master");
+        await git.push("heroku", "main");
         return await message.send("successfully updated");
       }
     } else if (message.text.includes("check")) {
       await git.fetch();
-      let commits = await git.log(["master" + "..origin/" + "master"]);
+      let commits = await git.log(["main" + "..origin/" + "main"]);
       if (commits.total === 0) {
         return await message.send(lang.HEROKU.ALLREDY);
       } else {
-        let inrlupdate = lang.HEROKU.LIST_UPDATE;
+        let C-iph3rupdate = lang.HEROKU.LIST_UPDATE;
         commits["all"].map((commit) => {
-          inrlupdate +=
+          C-iph3rupdate +=
             "```" +
             lang.HEROKU.COMMITS.format(
               commit.date.substring(0, 10),
@@ -88,7 +88,7 @@ Alpha(
             ) +
             "```\n\n";
         });
-        return await message.send(inrlupdate);
+        return await message.send(C-iph3rupdate);
       }
     }
   },
