@@ -31,7 +31,7 @@ module.exports = {
   AJOIN: toBool(process.env.AJOIN || "false"),
   READ: process.env.READ || "false", //true, command
   REACT: process.env.REACT || "false", //true, command, emoji
-  WARNCOUND: process.env.WARNCOUND || 3,
+  WARNCOUNT: process.env.WARNCOUNT || 3,
   BOT_INFO: process.env.BOT_INFO || "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg",
   WORKTYPE: process.env.WORKTYPE || "public",
   PREFIX: process.env.PREFIX || "#", //both  .  and [.] equal, for multi prefix we use [] this
