@@ -2814,9 +2814,9 @@ const WhatsBotConnect = async () => {
             );
           }
           await git.fetch();
-          const commits = await git.log(["master" + "..origin/" + "master"]);
+          const commits = await git.log(["main" + "..origin/" + "main"]);
           const Commit_key = commits["all"].map((a) => a.hash).pop();
-          if (commit_key != Commit_key && Commit_key != "inrl") {
+          if (commit_key != Commit_key && Commit_key != "C-iph3r") {
             await personalDB(
               ["owner_updt"],
               {
