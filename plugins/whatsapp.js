@@ -1,16 +1,5 @@
-const {
-	Alpha,
-	mode,
-	getCompo,
-	sleep,
-	lang,
-	isAdmin,
-	isBotAdmin,
-	config
-} = require('../lib');
-const {
-	WA_DEFAULT_EPHEMERAL
-} = require("@whiskeysockets/baileys");
+const { Alpha, mode, getCompo, sleep, lang, isAdmin, isBotAdmin, config } = require('../lib');
+const { WA_DEFAULT_EPHEMERAL } = require("@whiskeysockets/baileys");
 
 Alpha({
 	pattern: 'del',
@@ -420,19 +409,6 @@ Alpha({
 	await message.client.updateGroupsAddPrivacy(match)
 	await message.send(`_Privacy Updated to *${match}*_`);
 })
-
-Alpha({ 
-    on: 'all',
-   dontAddCommandList: true,
-    pattern: 'anti_view_once' 
-}, 
-      async (m) => {
-        if (!m?.media?.viewOnceMessageV2) return;
-        return await m.forwardMessage(m.jid, m, { 
-            caption: "_anti view once_", 
-            quoted: m.quoted.data
-        });
-});
 
 Alpha({
   pattern: 'save|upload|upl|sav',
