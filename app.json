@@ -48,7 +48,7 @@
     "PERSONAL_MESSAGE": {
       "description": "personal greetings for first message ",
       "required": true,
-      "value": "*👋 Hello there! 🤖 I'm alpha here to assist you while my owner is currently occupied. Don't worry, I'm equipped to help you out with whatever you need. Feel free to chat with me! 🚀✨*"
+      "value": "*👋 Hello there! 🤖 I'm alpha, i'm here to assist you while my owner is currently occupied. Don't worry, I'm equipped to help you out with whatever you need. Feel free to chat with me! 🚀✨*"
     },
     "REJECT_CALL": {
       "description": "automatically reject calls",
