@@ -1,12 +1,12 @@
 {
-  "name": "alpha@2.0.1",
+  "name": "alpha@1.0.8",
   "description": "simple multi featured whatsapp bot",
   "keywords": ["whatsapp"],
   "success_url": "/",
   "stack": "container",
   "env": {
     "SESSION_ID": {
-      "description": "to run the bot",
+      "description": "your ssid to run bot",
       "required": true,
       "value": ""
     },
@@ -23,47 +23,47 @@
     "WORKTYPE": {
       "description": "enter bot mode must be public/private",
       "required": true,
-      "value": "private"
+      "value": "public"
     },
     "BOT_INFO": {
-      "description": "baasic bot configration",
+      "description": "baasic bot info config img url can be mp4 too",
       "required": true,
-      "value": "alpha-md;alpha;https://i.imgur.com/nXqqjPL.jpg"
+      "value": "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg"
     },
     "PREFIX": {
       "description": "bot preifx  ., [.,!], false",
       "required": true,
-      "value": "."
+      "value": "#"
     },
     "AUDIO_DATA": {
       "description": "audio metadata",
       "required": true,
-      "value": "alpha;c-iph3r;https://i.imgur.com/nXqqjPL.jpg"
+      "value": "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg"
     },
     "STICKER_DATA": {
       "description": "sticker data",
       "required": true,
-      "value": "alpha;c-iph3r"
+      "value": "Cipher;Alpha-md"
     },
     "PERSONAL_MESSAGE": {
       "description": "personal greetings for first message ",
       "required": true,
-      "value": "this is a bot, owner is curently bussy with something"
+      "value": "*👋 Hello there! 🤖 I'm alpha here to assist you while my owner is currently occupied. Don't worry, I'm equipped to help you out with whatever you need. Feel free to chat with me! 🚀✨*"
     },
     "REJECT_CALL": {
-      "description": "automatic reject call",
+      "description": "automatically reject calls",
       "required": true,
       "value": "false"
     },
-    "WARN": {
-      "description": "warn count",
+    "WARNCOUNT": {
+      "description": "warn count for groups",
       "required": true,
-      "value": "4"
+      "value": "3"
     },
     "SUDO": {
-      "description": "second or tempory owners of bot",
+      "description": "add other numbers here separated by a comma(,)",
       "required": true,
-      "value": "null"
+      "value": ""
     },
     "AJOIN": {
       "description": "automatically join to all groups",
@@ -73,17 +73,42 @@
     "SAVE_STATUS": {
       "description": "save all status message",
       "required": true,
-      "value": ""
+      "value": "false"
     },
     "STATUS_VIEW": {
       "description": "status views, values= true,only-view=jid, not-view=jid",
       "required": true,
-      "value": "false"
+      "value": "true"
     },
     "ERROR_MSG": {
       "description": "send error messages to bot number",
       "required": true,
       "value": "true"
+    },
+    "RMBG_KEY": {
+      "description": "remove.bg API key",
+      "required": false,
+      "value": ""
+    },
+    "OPEN_AI": {
+      "description": "OpenAI API key",
+      "required": false,
+      "value": ""
+    },
+    "ELEVENLABS": {
+      "description": "Eleven Labs API key",
+      "required": false,
+      "value": ""
+    },
+    "ALPHA_KEY": {
+      "description": "Alpha API key (get it from https://api.alpha-md.rf.gd/signup)",
+      "required": true,
+      "value": ""
+    },
+    "OCR_KEY": {
+      "description": "OCR API key",
+      "required": true,
+      "value": "K84003107488957"
     }
   },
   "addons": [
@@ -91,7 +116,7 @@
       "plan": "heroku-postgresql"
     }
   ],
-"buildpacks": [
+  "buildpacks": [
     {
       "url": "heroku/nodejs"
     },
@@ -101,5 +126,5 @@
     {
       "url": "https://github.com/clhuang/heroku-buildpack-webp-binaries.git"
     }
-]
+  ]
 }
