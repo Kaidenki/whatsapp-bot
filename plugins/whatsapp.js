@@ -432,3 +432,18 @@ Alpha({
             quoted: m.quoted.data
         });
 });
+
+Alpha({
+  pattern: 'save|upload|upl|sav',
+  fromMe: true,
+  desc: 'saves whatsapp status',
+	type: 'whatsapp',
+  DismissPrefix: true
+}, async (message) => {
+return await message.forwardMessage(message.jid, message.reply_message, {
+                 quoted: message.data,
+                 linkPreview: {
+                              title: "status saver"
+                 }
+         })
+});
