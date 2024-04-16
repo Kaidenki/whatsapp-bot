@@ -437,7 +437,7 @@ Alpha({
   pattern: 'save|upload|upl|sav',
   fromMe: true,
   desc: 'saves whatsapp status',
-	type: 'whatsapp',
+  type: 'whatsapp',
   DismissPrefix: true
 }, async (message) => {
 return await message.forwardMessage(message.jid, message.reply_message, {
@@ -447,3 +447,21 @@ return await message.forwardMessage(message.jid, message.reply_message, {
                  }
          })
 });
+Alpha(
+	{
+	pattern: 'caption ?(.*)',
+	fromMe: true,
+	desc: 'copy or add caption to video or image',
+	type: 'whatsapp',
+	},
+	async (message, match) => {
+		if ((message.reply_message.image || message.reply_message.video) && match)
+			return await message.forwardMessage(message.jid,
+				await message.quoted.download(),
+				{ quoted: message.data, caption: match },
+			)
+		if (message.reply_message.text)
+			return await message.forwardMessage(message.jid, message.reply_message.text,
+				{ quoted: message.data})
+	}
+);
