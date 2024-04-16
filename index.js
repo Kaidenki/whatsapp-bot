@@ -2509,7 +2509,7 @@ const WhatsBotConnect = async () => {
                   },
                   "add",
                 );
-                const remains = config.WARNCOUND - count;
+                const remains = config.WARNCOUNT - count;
                 let warnmsg = `❏────[warning]────❏
 │ User :-@${m.number}
 ❏────────────────❏
@@ -2591,7 +2591,7 @@ const WhatsBotConnect = async () => {
                   },
                   "add",
                 );
-                const remains = config.WARNCOUND - count;
+                const remains = config.WARNCOUNT - count;
                 let warnmsg = `❏────[warning]────❏
 │ User :-@${m.number}
 ❏────────────────❏
@@ -2678,7 +2678,7 @@ const WhatsBotConnect = async () => {
                       },
                       "add",
                     );
-                    const remains = config.WARNCOUND - count;
+                    const remains = config.WARNCOUNT - count;
                     let warnmsg = `❏────[warning]────❏
 │ User :-@${m.number}
 ❏────────────────❏
