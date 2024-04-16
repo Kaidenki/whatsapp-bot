@@ -1,7 +1,6 @@
-
 {
   "name": "Alpha-md",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "WhatsApp bot made with nodejs and baileys",
   "main": "index.js",
   "scripts": {
