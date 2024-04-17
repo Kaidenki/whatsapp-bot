@@ -31,7 +31,7 @@ Alpha({
 }, async (message, match) => {
     const groupMetadata = await message.client.groupMetadata(message.from).catch(e => {})
     const participants = await groupMetadata.participants
-    const specifiedName = match.trim() || 'ciph3r 1';
+    const specifiedName = match.trim() || 'ciph3r';
     let counter = 1;
     let fileContent = "";
     for (let mem of participants) {
