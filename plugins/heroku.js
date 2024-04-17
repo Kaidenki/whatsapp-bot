@@ -1,33 +1,8 @@
-const simpleGit = require('simple-git');
-const git = simpleGit();
-const exec = require('child_process').exec;
+const { Alpha, config } = require('../lib');
+const { SUDO, HEROKU } = require("../config");
 const Heroku = require('heroku-client');
-const axios = require("axios");
-const {
-        PassThrough
-} = require('stream');
-const heroku = new Heroku({
-        token: process.env.HEROKU_API_KEY
-})
-
-function secondsToDhms(seconds) {
-        seconds = Number(seconds);
-        var d = Math.floor(seconds / (3600 * 24));
-        var h = Math.floor(seconds % (3600 * 24) / 3600);
-        var m = Math.floor(seconds % 3600 / 60);
-        var s = Math.floor(seconds % 60);
-        var dDisplay = d > 0 ? d + (d == 1 ? " day, " : " days, ") : "";
-        var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-        var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-        var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-        return dDisplay + hDisplay + mDisplay + sDisplay;
-}
-const {
-        Alpha,
-        GenListMessage,
-        lang,
-        config
-} = require('../lib');
+const heroku = new Heroku({ token: process.env.HEROKU_API_KEY })
+const baseURI = "/apps/" + HEROKU.APP_NAME;
 
 
 Alpha({
@@ -49,6 +24,7 @@ Alpha({
                 await message.send(`HEROKU : ${error.body.message}`)
         })
 })
+
 Alpha({
         pattern: 'delvar ?(.*)',
         fromMe: true,
@@ -72,3 +48,97 @@ Alpha({
                 await message.send(`HEROKU : ${error.body.message}`);
         });
 });
+
+Alpha({
+        pattern: 'getvar ?(.*)',
+        fromMe: true,
+        desc: 'show all config var',
+        type: 'heroku'
+}, async (message, match) => {
+        let msg = "*_all config vars_*\n\n",
+                got = false;
+        for (const key in config) {
+                if (key != 'DATABASE' && key != 'BASE_URL' && key != 'HEROKU' && key != 'SESSION_ID') {
+                        if (!match) {
+                                msg += `_*${key}* : ${config[key]}_\n`;
+                        } else if (match.toUpperCase() == key) {
+                                return await message.send(`_*${match.toUpperCase()}* : ${config[key]}_`);
+                                got = true;
+                                break;
+                        }
+                }
+        }
+        if (match && !got) return await message.send('_the requested key was not found_\n_try *getvar* to get all variables_');
+        return await message.send(msg);
+});
+
+Alpha(
+  { 
+    pattern: "setsudo ?(.*)", 
+    fromMe: true, 
+    desc: "add a number to the list of sudo numbers", 
+    type: "heroku"
+  },
+  async (message, match, m) => {
+    let newSudo = match; 
+    if (!newSudo) {
+      return await message.send("*Please provide a number to set as sudo*\n*eg setsudo 2348114860536*");
+    }
+    let setSudo = (SUDO + "," + newSudo).replace(/,,/g, ",");
+    setSudo = setSudo.startsWith(",") ? setSudo.replace(",", "") : setSudo;
+    await message.send("_New sudo numbers are:_"  +  setSudo);
+    await message.send("_It takes 30 seconds to take effect_");
+    await heroku.patch(baseURI + "/config-vars", { body: { SUDO: setSudo } })
+      .then(async (app) => {
+      })
+      .catch(error => {
+      });
+  }
+);
+
+
+Alpha(
+  { 
+    pattern: "delsudo ?(.*)", 
+    fromMe: true, 
+    desc: "delete a number from list of sudo numbers", 
+    type: "heroku"
+  },
+  async (message, match, m) => {
+    let delSudo = match;
+
+    if (!delSudo) {
+      return await message.send("*Please provide a number to delete from sudo*\n*eg delsudo 2348114860536*");
+    }
+    let sudoList = SUDO.split(",");
+    const index = sudoList.indexOf(delSudo);
+    if (index !== -1) {
+      sudoList.splice(index, 1);
+    }
+    let updatedSudoList = sudoList.join(",");
+    await message.send("_Updated sudo numbers are:_"  +  updatedSudoList);
+    await message.send("_It takes 30 seconds to take effect_");
+    await heroku.patch(baseURI + "/config-vars", { body: { SUDO: updatedSudoList } })
+      .then(async (app) => {
+      })
+      .catch(error => {
+      });
+  }
+);
+
+
+ Alpha(
+        { pattern: "getsudo ?(.*)", 
+          fromMe: true, 
+          desc: "shows current list of sudo numbers", 
+          type: "heroku" 
+        },
+        async (message, match) => {
+          const vars = await heroku
+            .get(baseURI + "/config-vars")
+            .catch(async (error) => {
+              return await message.send("HEROKU : " + error.body.message);
+            });
+          await message.send("```" + `SUDO Numbers are : ${vars.SUDO}` + "```");
+        }
+      );
