@@ -1,10 +1,5 @@
-const {
-	Alpha,
-	personalDB
-} = require('../lib')
-const {
-	exec
-} = require("child_process");
+const { Alpha, personalDB } = require('../lib')
+const { exec } = require("child_process");
 
 Alpha({
 	pattern: 'turnoff ?(.*)',
@@ -22,7 +17,7 @@ Alpha({
 	await personalDB(['shutoff'], {
 		content: 'true'
 	}, 'set');
-	await message.send('*shutting off!⚫️*');
+	await message.send('*shutting down!!!⚫️*');
 	return exec('pm2 restart all')
 });
 
@@ -42,6 +37,6 @@ Alpha({
 	await personalDB(['shutoff'], {
 		content: 'false'
 	}, 'set');
-	await message.send('*shutting on!⚪️*');
+	await message.send('*turning on!!!⚪️*');
 	return exec('pm2 restart all')
 });
