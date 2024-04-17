@@ -1,8 +1,4 @@
-const {
-    Alpha,
-    lang,
-    addSpace
-} = require('../lib');
+const { Alpha, lang, addSpace } = require('../lib');
 
 Alpha({
     pattern: 'tag ?(.*)',
