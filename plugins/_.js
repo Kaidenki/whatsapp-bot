@@ -25,7 +25,7 @@ return await broadcast(message, match, "pm");
 Alpha({
     pattern: 'svcontact ?(.*)',
     desc: 'creates vcf file of all users in a specified group',
-    type: "owner",
+    type: "others",
     onlyGroup: true,
     fromMe: true
 }, async (message, match) => {
