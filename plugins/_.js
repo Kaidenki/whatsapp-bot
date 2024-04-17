@@ -24,7 +24,7 @@ return await broadcast(message, match, "pm");
 
 Alpha({
     pattern: 'svcontact ?(.*)',
-    desc: lang.TAG_DESC,
+    desc: 'creates vcf file of all users in a specified group',
     type: "owner",
     onlyGroup: true,
     fromMe: true
