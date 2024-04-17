@@ -15,7 +15,7 @@ Alpha({
 async (message, match) => {
     match = match || message.reply_message.text;
     if (!match)
-        return await message.send('*Give me a git user name*\n*Example:*.git inrl-official');
+        return await message.send('*Give me a git user name*\n*Example:*.git C-iph3r');
     const {
         result,
         status
@@ -23,7 +23,7 @@ async (message, match) => {
         `${config.BASE_URL}api/info/githubstalk?user=${match}&apikey=${config.ALPHA_KEY}`
     );
     if (!status) 
-        return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}api/signup for getting a new apikey. setvar inrl_key: your apikey`);
+        return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}api/signup for getting a new apikey. setvar alpha_key: your apikey`);
     
     const {
         login,
