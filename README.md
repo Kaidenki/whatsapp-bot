@@ -26,11 +26,9 @@
 
 
 ### GET SESSION ID
-- Click here to get your session id
+- Click here to get your session id use pairing code qr not working
    <br>
-<a href='https://alpha-qr-3083f89437a9.herokuapp.com/' target="_blank"><img alt='GET SESSION' src='https://img.shields.io/badge/SCAN-QR-100000?style=for-the-badge&logo=scan&logoColor=white&labelColor=black&color=black'/></a>
-  <br>
-  <a href='https://qr-pair-63r7.onrender.com/' target="_blank"><img alt='GET SESSION2' src='https://img.shields.io/badge/SCAN-QR2-100000?style=for-the-badge&logo=scan&logoColor=white&labelColor=black&color=black'/></a>
+<a href='https://session.alpha-md.rf.gd/' target="_blank"><img alt='GET SESSION' src='https://img.shields.io/badge/SCAN-QR-100000?style=for-the-badge&logo=scan&logoColor=white&labelColor=black&color=black'/></a>
 
 ***
 ### INFORMATION !(BOT WONT WORK WITHOUT THIS)
