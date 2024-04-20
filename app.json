@@ -28,22 +28,22 @@
     "BOT_INFO": {
       "description": "baasic bot info config img url can be mp4 too",
       "required": true,
-      "value": "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg"
+      "value": "alpha-md;C-iph3r;https://i.imgur.com/nXqqjPL.jpg"
     },
     "PREFIX": {
       "description": "bot preifx  ., [.,!], false",
       "required": true,
-      "value": "#"
+      "value": "[.,!]"
     },
     "AUDIO_DATA": {
       "description": "audio metadata",
       "required": true,
-      "value": "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg"
+      "value": "alpha-md;C-iph3r;https://i.imgur.com/nXqqjPL.jpg"
     },
     "STICKER_DATA": {
       "description": "sticker data",
       "required": true,
-      "value": "Cipher;Alpha-md"
+      "value": "C-iph3r;alpha-md"
     },
     "PERSONAL_MESSAGE": {
       "description": "personal greetings for first message ",
@@ -61,12 +61,12 @@
       "value": "3"
     },
     "SUDO": {
-      "description": "add other numbers here separated by a comma(,)",
+      "description": "add other numbers here separated by a comma(,) eg 2348114xxxx,234913798xxxx...",
       "required": true,
       "value": ""
     },
     "AJOIN": {
-      "description": "automatically join to all groups",
+      "description": "automatically join to all group invites",
       "required": true,
       "value": "false"
     },
