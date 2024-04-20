@@ -26,12 +26,12 @@
 
 
 ### GET SESSION ID
-- Click here to get your session id use pairing code qr not working
+- Click here to get your SESSION_ID
    <br>
 <a href='https://session.alpha-md.rf.gd/' target="_blank"><img alt='GET SESSION' src='https://img.shields.io/badge/SCAN-QR-100000?style=for-the-badge&logo=scan&logoColor=white&labelColor=black&color=black'/></a>
 
 ***
-### INFORMATION !(BOT WONT WORK WITHOUT THIS)
+### INFORMATION (BOT WON'T WORK WITHOUT THIS)
 - Get api key from  [Alpha api](https://api.alpha-md.rf.gd/signup)
 ### SUPPORT GROUP
 In case of support or any issues you can come here
@@ -141,7 +141,7 @@ $ npm start
    
 ## 
 - Not For Sale
-- If A plugin's code is obfuscated , You don't have permission to edit it in any form 
+- If A plugin's code is obfuscated , You don't have permission to deobfuscate or edit it in any form 
 - Don't Forget to Give Credits If you are using or Reuploading My Plugins/files
 - Have A Good Day Ahead
 
