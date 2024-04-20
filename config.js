@@ -16,6 +16,8 @@ module.exports = {
   },
   PORT: process.env.PORT || 3067,
   BASE_URL: "https://api.alpha-md.rf.gd/",
+  API_URL: "https://alpha-apis.vercel.app/",
+  GEMINI_KEY: process.env.GEMINI_KEY || "AIzaSyCZIqhWvQZ54K2Bjk418vbg7kO6zichY6c",
   REPO: "C-iph3r/alpha-md",
   REJECT_CALL: toBool(process.env.REJECT_CALL || "false"),
   BADWORD_BLOCK: toBool(process.env.BADWORD_BLOCK || "false"),
