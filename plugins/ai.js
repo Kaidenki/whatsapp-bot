@@ -16,7 +16,7 @@ Alpha({
 	match = match || message.reply_message.text;
 	if (!match) return await message.send("*please give me an query!*");
 	const res = await getJson(`${config.BASE_URL}api/ai/c-ai?characterid=${alpha}&message=${match}&apikey=${config.ALPHA_KEY}`);
-	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}api/signup for gettig a new apikey. setvar inrl_key: your apikey`);
+	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}signup for gettig a new apikey. setvar alpha_key: your apikey`);
 	return await message.send(res.result.response);
 });
 
@@ -29,7 +29,7 @@ Alpha({
 	match = match || message.reply_message.text;
 	if (!match) return await message.send("*please give me an query!*");
 	const res = await getJson(`${config.BASE_URL}api/ai/c-ai?characterid=${power}&message=${match}&apikey=${config.ALPHA_KEY}`);
-	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}api/signup for gettig a new apikey. setvar inrl_key: your apikey`);
+	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}signup for gettig a new apikey. setvar alpha_key: your apikey`);
 	return await message.send(res.result.response);
 });
 
@@ -42,7 +42,7 @@ Alpha({
 	match = match || message.reply_message.text;
 	if (!match) return await message.send("*please give me an query!*");
 	const res = await getJson(`${config.BASE_URL}api/ai/c-ai?characterid=${delta}&message=${match}&apikey=${config.ALPHA_KEY}`);
-	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}api/signup for gettig a new apikey. setvar inrl_key: your apikey`);
+	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}signup for gettig a new apikey. setvar alpha_key: your apikey`);
 	return await message.send(res.result.response);
 });
 
@@ -55,7 +55,7 @@ Alpha({
 	match = match || message.reply_message.text;
 	if (!match) return await message.send("*please give me an query!*");
 	const res = await getJson(`${config.BASE_URL}api/ai/c-ai?characterid=${cid}&message=${match}&apikey=${config.ALPHA_KEY}`);
-	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}api/signup for gettig a new apikey. setvar inrl_key: your apikey`);
+	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}signup for gettig a new apikey. setvar alpha_key: your apikey`);
 	return await message.send(res.result.response);
 });
 
@@ -68,7 +68,7 @@ Alpha({
 	match = match || message.reply_message.text;
 	if (!match) return await message.send("*please give me an query!*");
 	const res = await getJson(`${config.BASE_URL}api/ai/c-ai?characterid=${gojo}&message=${match}&apikey=${config.ALPHA_KEY}`);
-	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}api/signup for gettig a new apikey. setvar inrl_key: your apikey`);
+	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}signup for gettig a new apikey. setvar alpha_key: your apikey`);
 	return await message.send(res.result.response);
 });
 
@@ -82,7 +82,7 @@ Alpha({
 	match = match || message.reply_message.text;
 	if (!match) return await message.send("*please give me an query!*");
 	const res = await getJson(`${config.BASE_URL}api/ai/c-ai?characterid=${itadori}&message=${match}&apikey=${config.ALPHA_KEY}`);
-	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}api/signup for gettig a new apikey. setvar inrl_key: your apikey`);
+	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}signup for gettig a new apikey. setvar alpha_key: your apikey`);
 	return await message.send(res.result.response);
 });
 
@@ -95,6 +95,6 @@ Alpha({
 	match = match || message.reply_message.text;
 	if (!match) return await message.send("*please give me an query!*");
 	const res = await getJson(`${config.BASE_URL}api/ai/c-ai?characterid=${makima}&message=${match}&apikey=${config.ALPHA_KEY}`);
-	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}api/signup for gettig a new apikey. setvar inrl_key: your apikey`);
+	if (res.error) return await message.send(`Please enter a new apikey, as the given apikey limit has been exceeded. Visit ${config.BASE_URL}signup for gettig a new apikey. setvar alpha_key: your apikey`);
 	return await message.send(res.result.response);
 });
