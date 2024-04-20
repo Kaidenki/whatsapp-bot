@@ -62,7 +62,7 @@ Alpha({
         const response = await axios.get(`https://api.github.com/repos/${config.REPO}`);
         if (response.status === 200) {
           const repoData = response.data;
-          const info = `📁 Repository Name: ${repoData.name}\n✏️ Description: ${repoData.description}\n👥 Owner: ${repoData.owner.login}\n⭐ Stars: ${repoData.stargazers_count}\n🍽️ Forks: ${repoData.forks_count}\n🔗 URL: ${repoData.html_url}
+          const info = `📁 *Repository Name:*  ${repoData.name}\n✏️ *Description:* ${repoData.description}\n👥 *Owner:* ${repoData.owner.login}\n⭐ *Stars:* ${repoData.stargazers_count}\n🍽️ *Forks:* ${repoData.forks_count}\n🔗 *URL:* ${repoData.html_url}
           `.trim();
           await message.reply(info);
         } else {
