@@ -1,7 +1,7 @@
 const toBool = (x) => x == "true";
 const { existsSync } = require("fs");
 const { Sequelize } = require("sequelize");
-if (existsSync('config.env')) require('dotenv').config({ path: './config.env' })
+if (existsSync('config.env')) require('dotenv').config({ path: './.env' })
 process.env.NODE_OPTIONS = "--max_old_space_size=2560"; //2.5
 const DB_URL = process.env.DATABASE_URL || "";
 const keysInrl = ['hjS2WBZ', 'QbfLgXT', 'dOd5DTh', 'free50_inrl', '5UYcKW6'];
@@ -32,14 +32,14 @@ module.exports = {
   READ: process.env.READ || "false", //true, command
   REACT: process.env.REACT || "false", //true, command, emoji
   WARNCOUNT: process.env.WARNCOUNT || 3,
-  BOT_INFO: process.env.BOT_INFO || "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg",
+  BOT_INFO: process.env.BOT_INFO || "alpha-md;C-iph3r;https://i.imgur.com/nXqqjPL.jpg",
   WORKTYPE: process.env.WORKTYPE || "public",
-  PREFIX: process.env.PREFIX || "#", //both  .  and [.] equal, for multi prefix we use [] this
+  PREFIX: process.env.PREFIX || "[.]", //both  .  and [.] equal, for multi prefix we use [] this
   LANG: process.env.LANG || "en",
   PERSONAL_MESSAGE: process.env.PERSONAL_MESSAGE || "null",
-  BOT_PRESENCE: process.env.BOT_PRESENCE || "composing", //available , composing, recording, paused 
-  AUDIO_DATA: process.env.AUDIO_DATA || "Alpha-md;Cipher;https://i.imgur.com/nXqqjPL.jpg",
-  STICKER_DATA: process.env.STICKER_DATA || "Cipher;Alpha-md",
+  BOT_PRESENCE: process.env.BOT_PRESENCE || "", //available , composing, recording, paused 
+  AUDIO_DATA: process.env.AUDIO_DATA || "alpha-md;C-iph3r;https://i.imgur.com/nXqqjPL.jpg",
+  STICKER_DATA: process.env.STICKER_DATA || "C-iph3r;alpha-md",
   SUDO: process.env.SUDO || "",// add sudo numbers here seperated y a comma(,) after each
   RMBG_KEY: process.env.RMBG_KEY,
   OPEN_AI: process.env.OPEN_AI,
