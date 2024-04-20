@@ -34,6 +34,6 @@ Alpha({
     if (res.error) {
         return await message.send(`*There was an issue processing your request. Please try again later or provide a different prompt.*`);
     } 
-    const text = res.result.candidates[0].content.parts[0].text;
+    const text = res.candidates[0].content.parts[0].text;
     return await message.send(text);
 });
