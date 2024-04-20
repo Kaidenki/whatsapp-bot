@@ -131,9 +131,9 @@ $ npm start
 </h2>
    
 ## 
-- This bot is not made by `WhatsApp Inc.` So misusing the bot might `ban` your `WhatsApp account!`(Though your WhatsApp account can be unbanned only once.)
+- This alpha is not made by `WhatsApp Inc.` So misusing it might `ban` your `WhatsApp account!`
 - I am not responsible for banning your account.
-- Use at your own risk by keeping this warning in mind.
+- Use alpha at your own risk by keeping this warning in mind.
 
 
 <h2 align="center">  NOTICE
