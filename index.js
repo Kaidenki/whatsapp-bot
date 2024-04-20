@@ -135,7 +135,12 @@ store.poll_message = {
 const WhatsBotConnect = async () => {
  console.log("generating session!!");
   if (!config.SESSION_ID) {
-		console.log('please provide a session id in config.js\n\nscan from Alpha server');
+		console.log('please provide a session id in config.js\nscan from Alpha server');
+		await sleep(5000);
+		process.exit(1);
+	}
+  if (!config.ALPHA_KEY) {
+		console.log(`please provide alpha_key in config.js\nget an api key from ${config.BASE_URL}signup`);
 		await sleep(5000);
 		process.exit(1);
 	}
