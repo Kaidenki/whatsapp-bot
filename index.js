@@ -9,6 +9,7 @@ const {
   makeInMemoryStore,
   jidNormalizedUser,
   proto,
+  fetchLatestBaileysVersion,
   Browsers,
   getAggregateVotesInPollMessage,
   getKeyAuthor,
@@ -154,17 +155,14 @@ const WhatsBotConnect = async () => {
   try {
     console.log("Syncing Database");
     await config.DATABASE.sync();
-    const { state, saveCreds } = await useMultiFileAuthState(
-      __dirname + "/auth_info_baileys",
-    );
+    const { state, saveCreds } = await useMultiFileAuthState( __dirname + "/auth_info_baileys",);
+    const { version, isLatest } = await fetchLatestBaileysVersion()
+    console.log(`using WA v${version.join('.')}, isLatest: ${isLatest}`)
     let conn = await WASocket({
+      version,
       logger: pino({ level: "fatal" }),
       printQRInTerminal: true,
-      browser: ["Alpha", "safari", "1.0.0"],
-      fireInitQueries: false,
-      shouldSyncHistoryMessage: false,
-      downloadHistory: false,
-      syncFullHistory: false,
+      browser: Browsers.windows('Firefox'),
       auth: state,
       generateHighQualityLinkPreview: true,
       getMessage: async (key) => {
