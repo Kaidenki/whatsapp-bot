@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/C-iph3r/alpha-md.git test"
+    "url": "git+https://github.com/C-iph3r/alpha-md.git"
   },
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
@@ -47,6 +47,7 @@
     "sequelize": "^6.21.4",
     "simple-git": "^3.7.1",
     "sqlite3": "^5.0.11",
-    "util": "^0.12.4"
+    "util": "^0.12.4",
+    "uuid": "^9.0.1"
   }
 }
