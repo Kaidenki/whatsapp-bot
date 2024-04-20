@@ -80,13 +80,14 @@ Alpha(
     type: "heroku"
   },
   async (message, match, m) => {
-    let newSudo = match; 
+    const match2 = message.reply_message.sender.split('@')[0];
+    let newSudo = match2||match; 
     if (!newSudo) {
-      return await message.send("*Please provide a number to set as sudo*\n*eg setsudo 2348114860536*");
+      return await message.send("*Please provide a number to set as sudo*\n*or reply to a user to set as sudo*\n*eg setsudo 2348114860536*");
     }
     let setSudo = (SUDO + "," + newSudo).replace(/,,/g, ",");
     setSudo = setSudo.startsWith(",") ? setSudo.replace(",", "") : setSudo;
-    await message.send("_New sudo numbers are:_"  +  setSudo);
+    await message.send("_New sudo numbers are:_ "  +  setSudo);
     await message.send("_It takes 30 seconds to take effect_");
     await heroku.patch(baseURI + "/config-vars", { body: { SUDO: setSudo } })
       .then(async (app) => {
@@ -99,16 +100,16 @@ Alpha(
 
 Alpha(
   { 
-    pattern: "delsudo ?(.*)", 
+    pattern: "remsudo ?(.*)", 
     fromMe: true, 
-    desc: "delete a number from list of sudo numbers", 
+    desc: "remove a number from list of sudo numbers", 
     type: "heroku"
   },
   async (message, match, m) => {
-    let delSudo = match;
-
+   const match2 = message.reply_message.sender.split('@')[0];
+    let delSudo = match2||match; 
     if (!delSudo) {
-      return await message.send("*Please provide a number to delete from sudo*\n*eg delsudo 2348114860536*");
+      return await message.send("*Please provide a number to delete from sudo*\n*or reply to a user to delete from sudo*\n*eg remsudo 2348114860536*");
     }
     let sudoList = SUDO.split(",");
     const index = sudoList.indexOf(delSudo);
@@ -116,7 +117,7 @@ Alpha(
       sudoList.splice(index, 1);
     }
     let updatedSudoList = sudoList.join(",");
-    await message.send("_Updated sudo numbers are:_"  +  updatedSudoList);
+    await message.send("_Updated sudo numbers are:_ "  +  updatedSudoList);
     await message.send("_It takes 30 seconds to take effect_");
     await heroku.patch(baseURI + "/config-vars", { body: { SUDO: updatedSudoList } })
       .then(async (app) => {
