@@ -1,5 +1,8 @@
-const { Alpha, mode, getCompo, sleep, lang, isAdmin, isBotAdmin, config } = require('../lib');
+const { Alpha, mode, getCompo, personalDB, sleep, lang, isAdmin, isBotAdmin, config } = require('../lib');
 const { WA_DEFAULT_EPHEMERAL } = require("@whiskeysockets/baileys");
+const mt = require('moment-timezone');
+const { runtime } = require("../lib/main/func");
+
 
 Alpha({
 	pattern: 'del',
@@ -442,4 +445,66 @@ Alpha(
 			return await message.forwardMessage(message.jid, message.reply_message.text,
 				{ quoted: message.data})
 	}
+);
+
+
+function parseDuration(durationString) {
+    let duration = 0;
+    const minutesRegex = /(\d+)m/gi;
+    const secondsRegex = /(\d+)s/gi;
+    const minutesMatch = durationString.match(minutesRegex);
+    const secondsMatch = durationString.match(secondsRegex);
+    if (minutesMatch) {
+        duration += parseInt(minutesMatch[0]) * 60000;
+    }
+    if (secondsMatch) {
+        duration += parseInt(secondsMatch[0]) * 1000;
+    }
+    return duration;
+}
+
+
+Alpha(
+    {
+        pattern: 'abio ?(.*)',
+        fromMe: true,
+        desc: 'automatically update bio in a set time',
+        type: 'whatsapp',
+    },
+    async (message, match) => {
+        if (!match) {
+            return await message.reply(`To set autobio, use the abio command followed by your custom message and optional update interval.\n*Example: ${config.PREFIX}abio Hello, I'm using this cool bot! &int 60s.*\n\nYou can use the following placeholders in your message:\n*&int*: Update interval in seconds and minutes(*default: 10*) *can use 1s or 1m*\n*&date*: Current date (YYYY-MM-DD)\n*&time*: Current time (HH:mm:ss)\n*&upt*: Bot uptime\n\nTo turn off bio updates, use *abio off*.`);
+        }
+        if (match.trim().toLowerCase() === 'off') {
+            const abios = await personalDB(["abio"], { content: '' }, "get");
+            if (abios && abios.abio === 'off') {
+                return await message.reply("*auto bio has already been turned off.*");
+            }
+            await personalDB(["abio"], { content: 'off' }, "set");
+            return await message.reply("*successfully turned off auto bio*");
+        } else if (match.trim() !== '') {
+            await personalDB(["abio"], { content: match.trim() }, "set");
+            await message.reply("*successfully set and activated auto bio*\n*use abio off to turn off*");
+        }
+        const abio = await personalDB(["abio"], { content: '' }, "get");
+        let abioData = abio ? abio.abio : '';
+        if (!abioData || abioData === 'off') return;
+        let duration = 10000;
+        const matchDuration = abioData.match(/&int (\d+(m|s)?)+/i);
+        if (matchDuration && matchDuration[1]) {
+            duration = parseDuration(matchDuration[1]);
+            abioData = abioData.replace(/&int (\d+(m|s)?)+/gi, '');
+        }
+        
+        const updateBio = async () => {
+            const dateTime = mt().tz(config.TZ);
+            const date = dateTime.format("YYYY-MM-DD");
+            const time = dateTime.format("HH:mm:ss");
+            const uptime = runtime(process.uptime());
+            const status = `${abioData.replace(/&date/gi, date).replace(/&time/gi, time).replace(/&upt/gi, uptime)}`;
+           await message.client.updateProfileStatus(status);
+        };
+        await updateBio();
+        setInterval(updateBio, duration);
+    }
 );
