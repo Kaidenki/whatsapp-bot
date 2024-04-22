@@ -5,7 +5,6 @@ if (existsSync('config.env')) require('dotenv').config({ path: './.env' })
 process.env.NODE_OPTIONS = "--max_old_space_size=2560"; //2.5
 const DB_URL = process.env.DATABASE_URL || "";
 const keysInrl = ['hjS2WBZ', 'QbfLgXT', 'dOd5DTh', 'free50_inrl', '5UYcKW6'];
-const apiurls = ["https://worthwhile-mandy-c-iph3r.koyeb.app/", "https://api.alpha-md.rf.gd/"];
 
 module.exports = {
   RKEY : keysInrl[Math.floor(keysInrl.length * Math.random())],
@@ -15,11 +14,11 @@ module.exports = {
     APP_NAME: process.env.HEROKU_APP_NAME,
   },
   PORT: process.env.PORT || 3067,
- // BASE_URL: apiurls[Math.floor(apiurls.length * Math.random())],
   BASE_URL: "https://worthwhile-mandy-c-iph3r.koyeb.app/",
   API_URL: "https://alpha-apis.vercel.app/",
   GEMINI_KEY: process.env.GEMINI_KEY || "AIzaSyCZIqhWvQZ54K2Bjk418vbg7kO6zichY6c",
   REPO: "C-iph3r/alpha-md",
+  TZ: process.env.TZ || "Africa/lagos",  // leave if you dont know what youre doing
   REJECT_CALL: toBool(process.env.REJECT_CALL || "false"),
   BADWORD_BLOCK: toBool(process.env.BADWORD_BLOCK || "false"),
   ALWAYS_ONLINE: toBool(process.env.ALWAYS_ONLINE || "true"),
