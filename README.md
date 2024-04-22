@@ -32,7 +32,7 @@
 
 ***
 ### INFORMATION (BOT WON'T WORK WITHOUT THIS)
-- Get api key from  [Alpha api](https://api.alpha-md.rf.gd/signup)
+- Get api key from  [Alpha api](https://worthwhile-mandy-c-iph3r.koyeb.app/signup)
 ### SUPPORT GROUP
 In case of support or any issues you can come here
 
@@ -48,7 +48,7 @@ In case of support or any issues you can come here
 
 2. Now Deploy by inputing username and clicking sumbit button
     <br>
-<a href='https://api.alpha-md.rf.gd/deploy/heroku' target="_blank"><img alt='DEPLOY' src='https://img.shields.io/badge/-DEPLOY-black?style=for-the-badge&logo=heroku'/></a>
+<a href='https://worthwhile-mandy-c-iph3r.koyeb.app/deploy/heroku' target="_blank"><img alt='DEPLOY' src='https://img.shields.io/badge/-DEPLOY-black?style=for-the-badge&logo=heroku'/></a>
 
 #### Heroku Buildpack
 | BuildPack | LINK |
