@@ -1888,7 +1888,6 @@ const WhatsBotConnect = async () => {
             antilink,
             antiword,
             antibot,
-            antidelete,
           } = await groupDB(
             [
               "pdm",
@@ -1898,7 +1897,6 @@ const WhatsBotConnect = async () => {
               "antilink",
               "antiword",
               "antibot",
-              "antidelete",
             ],
             {
               jid: chatUpdate.messages[0].key.remoteJid,
@@ -2455,25 +2453,7 @@ const WhatsBotConnect = async () => {
               await conn.updateBlockStatus(m.from, "block");
           } else if (m.isGroup && !m.isCreator && shutoff != "true") {
             const text = (m.displayText || "ÃŸÃŸÃŸÃŸÃŸ").toLowerCase();
-            if (antidelete == "true" && m.type != "protocolMessage") {
-              if (!conn.chats) conn.chats = {};
-              if (!conn.chats[m.jid]) conn.chats[m.jid] = {};
-              conn.chats[m.jid][m.key.id] = m.message;
-            } else if (antidelete == "true" && m.type == "protocolMessage") {
-              const { key } = chatUpdate.messages[0].message.protocolMessage;
-              if (!key) return;
-              const chat = conn.chats[m.jid][key.id];
-              if (!chat) return;
-              await m.forwardMessage(m.jid, chat, {
-                linkPreview: {
-                  title: "deleted message",
-                },
-                quoted: {
-                  key,
-                  message: chat,
-                },
-              });
-            }
+            
             if (!(await isBotAdmin(m))) return;
             if (await isAdmin(m)) return;
             if (
@@ -2737,8 +2717,43 @@ const WhatsBotConnect = async () => {
               });
             }
           }
-          //end
-          //automatic reaction
+          if (config.ANTI_DELETE === "null") {
+            return;
+        } else if (config.ANTI_DELETE && m.type === "protocolMessage") {
+            const protocolMessage = chatUpdate.messages[0].message.protocolMessage;
+            if (!protocolMessage || !protocolMessage.key) {
+                return;
+            }
+            const key = protocolMessage.key;
+            const chat = conn.chats[m.jid][key.id];
+            if (!chat) {
+                return;
+            }
+            if (m.isCreator) {
+              return;
+            }
+            let forwardTo;
+            if (config.ANTI_DELETE === "pm") {
+                forwardTo = conn.user.id;
+            } else if (config.ANTI_DELETE === "gc") {
+                forwardTo = m.jid;
+            } else {
+                forwardTo = config.ANTI_DELETE;
+            }
+            await m.forwardMessage(forwardTo, chat, {
+                linkPreview: {
+                    title: "deleted message",
+                },
+                quoted: {
+                    key,
+                    message: chat,
+                },
+            });
+        } else if (config.ANTI_DELETE && m.type !== "protocolMessage") {
+            if (!conn.chats) conn.chats = {};
+            if (!conn.chats[m.jid]) conn.chats[m.jid] = {};
+            conn.chats[m.jid][m.key.id] = m.message;
+        }              
           if (!em_ed && shutoff != "true") {
             if (m && toMessage(config.REACT) == "emoji" && !isReact) {
               if (m.body.match(/\p{EPres}|\p{ExtPict}/gu)) {
