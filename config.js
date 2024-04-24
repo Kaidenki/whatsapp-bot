@@ -8,6 +8,7 @@ const keysInrl = ['hjS2WBZ', 'QbfLgXT', 'dOd5DTh', 'free50_inrl', '5UYcKW6'];
 
 module.exports = {
   RKEY : keysInrl[Math.floor(keysInrl.length * Math.random())],
+  ANTI_DELETE: process.env.ANTI_DELETE || 'gc', // can use pm, or jid '2348114860536@s.whatsapp.net'
   SESSION_ID: process.env.SESSION_ID || "", //your session id you got from scan required to run bot
   HEROKU: {
     API_KEY: process.env.HEROKU_API_KEY,
@@ -35,7 +36,7 @@ module.exports = {
   REACT: process.env.REACT || "false", //true, command, emoji
   WARNCOUNT: process.env.WARNCOUNT || 3,
   BOT_INFO: process.env.BOT_INFO || "alpha-md;C-iph3r;https://i.imgur.com/nXqqjPL.jpg",
-  WORKTYPE: process.env.WORKTYPE || "public",
+  WORKTYPE: process.env.WORKTYPE || "private",
   PREFIX: process.env.PREFIX || "[.]", //both  .  and [.] equal, for multi prefix we use [] this
   LANG: process.env.LANG || "en",
   PERSONAL_MESSAGE: process.env.PERSONAL_MESSAGE || "null",
