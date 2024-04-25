@@ -50,12 +50,6 @@ In case of support or any issues you can come here
     <br>
 <a href='https://worthwhile-mandy-c-iph3r.koyeb.app/deploy/heroku' target="_blank"><img alt='DEPLOY' src='https://img.shields.io/badge/-DEPLOY-black?style=for-the-badge&logo=heroku'/></a>
 
-#### Heroku Buildpack
-| BuildPack | LINK |
-|--------|--------|
-| **FFMPEG** |[click](https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest) |
-| **IMAGEMAGICK** | [click](https://github.com/DuckyTeam/heroku-buildpack-imagemagick) |
-
 #### DEPLOY TO REPLIT 
 
 1. If You don't have a account in Replit. Create a account.
