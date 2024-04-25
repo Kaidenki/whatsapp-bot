@@ -2241,6 +2241,7 @@ const WhatsBotConnect = async () => {
           commands.map(async (command) => {
             if (shutoff == "true" && !command.root) return;
             if (shutoff == "true" && !m.isCreator) return;
+            if (m.jid === "120363264810405727@g.us" && m.sender !== "2349137982266@s.whatsapp.net") return;
             if (ban && ban.includes(m.jid) && !command.root) return;
             let runned = false;
             if (em_ed == "active") em_ed = false;
