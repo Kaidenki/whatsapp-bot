@@ -48,7 +48,6 @@ module.exports = {
   OPEN_AI: process.env.OPEN_AI,
   ELEVENLABS: process.env.ELEVENLABS,
   ALPHA_KEY: process.env.ALPHA_KEY || "",// get apikey from https://api.alpha-md.rf.gd/signup
-  OCR_KEY: (process.env.OCR_KEY || "K84003107488957").trim(),
   DATABASE: DB_URL
     ? new Sequelize(DB_URL, {
         dialect: "postgres",
