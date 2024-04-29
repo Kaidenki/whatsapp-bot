@@ -1,13 +1,5 @@
-const {
-    Alpha,
-    personalDB,
-    extractUrlsFromString,
-    lang
-} = require('../lib');
-
-const {
-    exec
-} = require("child_process");
+const { Alpha, personalDB, extractUrlsFromString, lang } = require('../lib');
+const { exec } = require("child_process");
 const axios = require("axios");
 const fs = require("fs");
 
