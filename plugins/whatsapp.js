@@ -414,12 +414,10 @@ Alpha({
 })
 
 Alpha({
-  pattern: 'save|upload|upl|sav',
+  pattern: 'sav',
   fromMe: true,
-  dontAddCommandList: true,
   desc: 'saves whatsapp status',
-  type: 'whatsapp',
-  DismissPrefix: true
+  type: 'whatsapp'
 }, async (message) => {
 return await message.forwardMessage(message.jid, message.reply_message, {
                  quoted: message.data,
