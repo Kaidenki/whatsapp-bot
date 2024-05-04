@@ -1,14 +1,4 @@
-const {
-	Alpha,
-	isAdmin,
-	isBotAdmin,
-	getString,
-	infoMessage,
-	lang,
-	config
-} = require('../lib');
-
-
+const {	Alpha, isAdmin, isBotAdmin, getString, infoMessage, lang, config } = require('../lib');
 
 Alpha({
 	pattern: 'promote ?(.*)',
@@ -264,7 +254,7 @@ Alpha({
 	return await message.send(lang.GROUP.UNLOCK.SUCCESS)
 });
 Alpha({
-	pattern: 'left ?(.*)',
+	pattern: 'leave ?(.*)',
 	type: 'group',
 	onlyGroup: true,
 	desc: lang.GROUP.LEFT.DESC,
