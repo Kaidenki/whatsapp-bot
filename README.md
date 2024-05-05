@@ -83,7 +83,7 @@ In case of support or any issues you can come here
 
 3. Now Deploy
     <br>
-<a href='https://app.koyeb.com/apps/new/import-project' target="_blank"><img alt='DEPLOY' src='https://img.shields.io/badge/-DEPLOY-black?style=for-the-badge&logo=koyeb'/></a>
+<a href='https://app.koyeb.com/apps/deploy?type=git&repository=github.com/C-iph3r/alpha-md&branch=main&name=alpha-md&builder=dockerfile&env[REACT]=command&env[SESSION_ID]=&env[DATABASE_URL]=&env[BOT_INFO]=alpha-md;C-iph3r;https://i.imgur.com/nXqqjPL.jpg&env[PREFIX]=!&env[KOYEB_API]=&env[AUDIO_DATA]=alpha-md;C-iph3r;https://i.imgur.com/nXqqjPL.jpg&env[WARNCOUNT]=3&env[STATUS_VIEW]=false&env[STICKER_DATA]=C-iph3r;alpha-md&env[WORKTYPE]=private&env[ALPHA_KEY]=alpha-free&env[SUDO]=' target="_blank"><img alt='DEPLOY' src='https://img.shields.io/badge/-DEPLOY-black?style=for-the-badge&logo=koyeb'/></a>
 
 #### DEPLOY ON MOGENIUS
 
