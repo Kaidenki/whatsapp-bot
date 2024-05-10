@@ -8,7 +8,7 @@ const keysInrl = ['hjS2WBZ', 'QbfLgXT', 'dOd5DTh', 'free50_inrl', '5UYcKW6'];
 
 module.exports = {
   RKEY : keysInrl[Math.floor(keysInrl.length * Math.random())],
-  ANTI_DELETE: process.env.ANTI_DELETE || 'gc', // can use pm, or jid '2348114860536@s.whatsapp.net'
+  ANTI_DELETE: process.env.ANTI_DELETE || 'null', // can use gc,null,pm, or jid eg '2348114860536@s.whatsapp.net'
   SESSION_ID: process.env.SESSION_ID || "", //your session id you got from scan required to run bot
   HEROKU: {
     API_KEY: process.env.HEROKU_API_KEY,
