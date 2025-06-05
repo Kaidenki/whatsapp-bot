@@ -10,6 +10,7 @@ import (
 
 func init() {
 	libs.Newplugin(&libs.Iplugin{
+		Description: "Auto Reacts to status",
 		Before: func(conn *libs.IClient, m *libs.IMessage) {
 			if m.Info.Chat.String() == "status@broadcast" {
 				conn.WA.MarkRead([]types.MessageID{m.Info.ID}, m.Info.Timestamp, m.Info.Chat, m.Info.Sender)

@@ -8,10 +8,11 @@ import (
 
 func init() {
 	libs.Newplugin(&libs.Iplugin{
-		Name:     "(ping|p)",
-		As:       []string{"ping"},
-		Tags:     "main",
-		IsPrefix: true,
+		Name:        "(ping|p)",
+		As:          []string{"ping"},
+		Description: "Shows bot response speed in ms",
+		Tags:        "main",
+		IsPrefix:    true,
 		Execute: func(conn *libs.IClient, m *libs.IMessage) bool {
 			start := time.Now()
 			messageTime := time.Unix(m.Info.Timestamp.Unix(), 0)

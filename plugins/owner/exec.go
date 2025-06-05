@@ -9,11 +9,12 @@ import (
 
 func init() {
 	libs.Newplugin(&libs.Iplugin{
-		Name:     `\$`,
-		As:       []string{"$"},
-		Tags:     "owner",
-		IsPrefix: false,
-		FromMe:   true,
+		Name:        `\$`,
+		As:          []string{"$"},
+		Description: "Sends the list of commands",
+		Tags:        "owner",
+		IsPrefix:    false,
+		FromMe:      true,
 		Execute: func(conn *libs.IClient, m *libs.IMessage) bool {
 			var cmd *exec.Cmd
 

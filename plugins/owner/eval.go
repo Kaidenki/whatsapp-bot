@@ -9,11 +9,12 @@ import (
 
 func init() {
 	libs.Newplugin(&libs.Iplugin{
-		Name:     `c`,
-		As:       []string{"c"},
-		Tags:     "owner",
-		IsPrefix: false,
-		FromMe:   true,
+		Name:        `c`,
+		As:          []string{"c"},
+		Tags:        "owner",
+		Description: "Sends the list of commands",
+		IsPrefix:    false,
+		FromMe:      true,
 		Execute: func(conn *libs.IClient, m *libs.IMessage) bool {
 			vm := otto.New()
 			vm.Set("M", m)
