@@ -38,7 +38,7 @@ func init() {
 func StartClient() {
 	dbLog := waLog.Stdout("Database", "DEBUG", true)
 	ctx := context.Background()
-	container, err := sqlstore.New(ctx, "sqlite", "file:bot.db?_pragma=foreign_keys(ON)", dbLog)
+	container, err := sqlstore.New(ctx, "sqlite", "file:bot.db?_pragma=foreign_keys(ON)&_pragma=journal_mode(WAL)", dbLog)
 	if err != nil {
 		panic(err)
 	}

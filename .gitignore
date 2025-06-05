@@ -3,3 +3,5 @@
 logs.txt
 .env
 *.db-journal
+*.db-shm
+*.db-wal
