@@ -1,0 +1,5 @@
+*.exe
+*.db
+logs.txt
+.env
+*.db-journal
