@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"aurora/src/libs"
+	"aurora/bot/libs"
 	"context"
 	"fmt"
 	"os"

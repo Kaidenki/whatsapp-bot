@@ -1,15 +1,19 @@
 package main
 
 import (
-	conn "aurora/src"
+	conn "aurora/bot"
+	"aurora/bot/config"
+	"aurora/bot/helpers"
 	"fmt"
 )
 
-func main() {
-	InitConfig()
+var log helpers.Logger
 
-	log.Info(fmt.Sprintf("Sudo Users: %v", GlobalConfig.Sudo))
-	log.Info(fmt.Sprintf("Mode: %s", GlobalConfig.Mode))
+func main() {
+	config.InitConfig()
+
+	log.Info(fmt.Sprintf("Sudo Users: %v", config.GlobalConfig.Sudo))
+	log.Info(fmt.Sprintf("Mode: %s", config.GlobalConfig.Sudo))
 
 	conn.StartClient()
 }

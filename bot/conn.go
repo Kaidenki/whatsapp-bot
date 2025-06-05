@@ -1,8 +1,9 @@
 package conn
 
 import (
-	"aurora/src/handlers"
-	"aurora/src/helpers"
+	"aurora/bot/config"
+	"aurora/bot/handlers"
+	"aurora/bot/helpers"
 	"context"
 	"fmt"
 	"os"
@@ -10,7 +11,7 @@ import (
 	"regexp"
 	"syscall"
 
-	_ "aurora/commands"
+	_ "aurora/plugins"
 
 	"github.com/mdp/qrterminal"
 	"go.mau.fi/whatsmeow"
@@ -38,10 +39,12 @@ func init() {
 func StartClient() {
 	dbLog := waLog.Stdout("Database", "DEBUG", true)
 	ctx := context.Background()
-	container, err := sqlstore.New(ctx, "sqlite", "file:bot.db?_pragma=foreign_keys(ON)&_pragma=journal_mode(WAL)", dbLog)
+	dbType, dbURL := config.GetDatabaseConfig()
+	container, err := sqlstore.New(ctx, dbType, dbURL, dbLog)
 	if err != nil {
 		panic(err)
 	}
+
 	handler := handlers.NewHandler(container)
 	log.Info("Connecting Socket")
 	conn := handler.Client()

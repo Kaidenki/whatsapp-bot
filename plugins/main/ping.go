@@ -1,7 +1,7 @@
 package commands
 
 import (
-	"aurora/src/libs"
+	"aurora/bot/libs"
 	"fmt"
 	"time"
 )

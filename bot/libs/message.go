@@ -1,7 +1,7 @@
 package libs
 
 import (
-	"aurora/src/helpers"
+	"aurora/bot/helpers"
 	"context"
 	"os"
 	"regexp"

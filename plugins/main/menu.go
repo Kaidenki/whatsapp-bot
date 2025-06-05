@@ -1,8 +1,8 @@
 package commands
 
 import (
-	"aurora/src/helpers"
-	"aurora/src/libs"
+	"aurora/bot/helpers"
+	"aurora/bot/libs"
 	"fmt"
 	"sort"
 )
