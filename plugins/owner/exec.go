@@ -13,7 +13,7 @@ func init() {
 		As:       []string{"$"},
 		Tags:     "owner",
 		IsPrefix: false,
-		IsOwner:  true,
+		FromMe:   true,
 		Execute: func(conn *libs.IClient, m *libs.IMessage) bool {
 			var cmd *exec.Cmd
 

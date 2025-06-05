@@ -71,7 +71,7 @@ func StartClient() {
 				panic(err)
 			}
 
-			fmt.Println("Your Code : " + code)
+			fmt.Println("Your Paring Code : " + code)
 		} else {
 			qrChan, _ := conn.GetQRChannel(context.Background())
 			if err := conn.Connect(); err != nil {
@@ -82,7 +82,7 @@ func StartClient() {
 				switch string(evt.Event) {
 				case "code":
 					qrterminal.GenerateHalfBlock(evt.Code, qrterminal.L, os.Stdout)
-					log.Info("Qr Required")
+					log.Info("Scan Qr To Connect")
 				}
 			}
 		}
@@ -91,7 +91,7 @@ func StartClient() {
 		if err := conn.Connect(); err != nil {
 			panic(err)
 		}
-		log.Info("Connected Socket")
+		log.Info("✅ Login Successful!")
 	}
 
 	// Listen to Ctrl+C (you can also do something else that prevents the program from exiting)

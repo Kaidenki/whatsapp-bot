@@ -1,8 +1,4 @@
 *.exe
-*.db
 logs.txt
 .env
-*.db-journal
-*.db-shm
-*.db-wal
 backup/*

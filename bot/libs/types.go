@@ -16,7 +16,7 @@ type Iplugin struct {
 	Description string
 	Tags        string
 	IsPrefix    bool
-	IsOwner     bool
+	FromMe      bool
 	IsMedia     bool
 	IsQuery     bool
 	IsGroup     bool
@@ -28,7 +28,7 @@ type Iplugin struct {
 
 type IMessage struct {
 	Info       types.MessageInfo
-	IsOwner    bool
+	FromMe     bool
 	Body       string
 	Text       string
 	Args       []string

@@ -12,7 +12,7 @@ import (
 type Config struct {
 	Bot_Name     string
 	Sudo         []string
-	Pattern      string
+	Pattern      helpers.ParsedPattern
 	Mode         string
 	Database_url string
 }
@@ -42,9 +42,7 @@ func InitConfig() {
 	}
 
 	Pattern := os.Getenv("PATTERN")
-	if Pattern == "" {
-		Pattern = "[?!.#]"
-	}
+	parsedPattern := helpers.ParsePattern(Pattern)
 
 	mode := os.Getenv("MODE")
 	mode = strings.ToLower(mode)
@@ -57,7 +55,7 @@ func InitConfig() {
 	GlobalConfig = Config{
 		Bot_Name:     botName,
 		Sudo:         sudoList,
-		Pattern:      Pattern,
+		Pattern:      parsedPattern,
 		Mode:         mode,
 		Database_url: databaseURL,
 	}

@@ -13,7 +13,7 @@ func init() {
 		As:       []string{"c"},
 		Tags:     "owner",
 		IsPrefix: false,
-		IsOwner:  true,
+		FromMe:   true,
 		Execute: func(conn *libs.IClient, m *libs.IMessage) bool {
 			vm := otto.New()
 			vm.Set("M", m)
