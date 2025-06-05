@@ -47,7 +47,8 @@ func InitConfig() {
 	}
 
 	mode := os.Getenv("MODE")
-	if mode == "" {
+	mode = strings.ToLower(mode)
+	if mode != "private" && mode != "public" {
 		mode = "private"
 	}
 
@@ -67,13 +68,10 @@ func GetDatabaseConfig() (dbType, dbURL string) {
 	env := os.Getenv("GO_ENV")
 	formattedURL, valid := helpers.FormatPostgresURL(GlobalConfig.Database_url, env)
 
-	if valid {
-		dbType = "postgres"
-		dbURL = formattedURL
-	} else {
-		log.Warn("Invalid or unsupported DATABASE_URL. Falling back to SQLite.")
-		dbType = "sqlite"
-		dbURL = "file:bot.db?_pragma=foreign_keys(ON)&_pragma=journal_mode(WAL)"
+	if !valid {
+		log.Warn("Invalid or unsupported DATABASE_URL. Bot will stop.")
+		return "", ""
 	}
-	return dbType, dbURL
+
+	return "postgres", formattedURL
 }

@@ -5,3 +5,4 @@ logs.txt
 *.db-journal
 *.db-shm
 *.db-wal
+backup/*

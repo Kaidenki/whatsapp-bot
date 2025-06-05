@@ -22,7 +22,6 @@ import (
 	"go.mau.fi/whatsmeow/types"
 	waLog "go.mau.fi/whatsmeow/util/log"
 	"google.golang.org/protobuf/proto"
-	_ "modernc.org/sqlite"
 )
 
 type Template struct {
@@ -47,10 +46,10 @@ func StartClient() {
 	}
 
 	handler := handlers.NewHandler(container)
-	log.Info("Connecting Socket")
+	log.Info("ℹ Connecting to WhatsApp... Please Wait.")
 	conn := handler.Client()
 	conn.PrePairCallback = func(jid types.JID, platform, businessName string) bool {
-		log.Info("Connected Socket")
+		log.Info("✅ Login Successful!")
 		return true
 	}
 
