@@ -13,6 +13,7 @@ import (
 
 	_ "aurora/plugins"
 
+	_ "github.com/lib/pq"
 	"github.com/mdp/qrterminal"
 	"go.mau.fi/whatsmeow"
 	"go.mau.fi/whatsmeow/proto/waCompanionReg"

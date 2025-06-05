@@ -63,16 +63,17 @@ func InitConfig() {
 
 }
 
-func GetDatabaseConfig() (dbType string, dbURL string) {
-	if GlobalConfig.Database_url != "" && strings.HasPrefix(GlobalConfig.Database_url, "postgres://") {
-		return "postgres", GlobalConfig.Database_url
-	}
+func GetDatabaseConfig() (dbType, dbURL string) {
+	env := os.Getenv("GO_ENV")
+	formattedURL, valid := helpers.FormatPostgresURL(GlobalConfig.Database_url, env)
 
-	if GlobalConfig.Database_url != "" {
-		log.Warn("DATABASE_URL provided but not PostgreSQL. Falling back to SQLite.")
+	if valid {
+		dbType = "postgres"
+		dbURL = formattedURL
 	} else {
-		log.Warn("DATABASE_URL not set. Using default SQLite.")
+		log.Warn("Invalid or unsupported DATABASE_URL. Falling back to SQLite.")
+		dbType = "sqlite"
+		dbURL = "file:bot.db?_pragma=foreign_keys(ON)&_pragma=journal_mode(WAL)"
 	}
-
-	return "sqlite", "file:bot.db?_pragma=foreign_keys(ON)&_pragma=journal_mode(WAL)"
+	return dbType, dbURL
 }
