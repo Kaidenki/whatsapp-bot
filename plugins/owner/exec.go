@@ -1,4 +1,4 @@
-package commands
+package plugins
 
 import (
 	"aurora/bot/libs"

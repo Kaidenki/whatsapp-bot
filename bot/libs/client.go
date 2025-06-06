@@ -208,7 +208,7 @@ func (conn *IClient) BuildEdit(chat types.JID, id types.MessageID, newContent *w
 			Key: &waCommon.MessageKey{
 				FromMe:    proto.Bool(true),
 				ID:        proto.String(id),
-				RemoteJID: proto.String(chat.String()), // note: field is RemoteJid, not RemoteJID
+				RemoteJID: proto.String(chat.String()),
 			},
 			EditedMessage: newContent,
 		},
@@ -229,3 +229,78 @@ func (conn *IClient) GetBytes(url string) ([]byte, error) {
 
 	return bytes, nil
 }
+
+/*
+
+func (cli *NewClientImpl) GenerateMessageID(cust string) types.MessageID {
+	data := make([]byte, 8, 8+20+16)
+	binary.BigEndian.PutUint64(data, uint64(time.Now().Unix()))
+	data = append(data, random.Bytes(16)...)
+	hash := sha256.Sum256(data)
+	return cust + strings.ToUpper(hex.EncodeToString(hash[:12])) + "NM4O"
+}
+
+func (client *NewClientImpl) FetchGroupAdmin(Jid types.JID) ([]string, error) {
+	var Admin []string
+	resp, err := client.WA.GetGroupInfo(Jid)
+	if err != nil {
+		return Admin, err
+	} else {
+		for _, group := range resp.Participants {
+			if group.IsAdmin || group.IsSuperAdmin {
+				Admin = append(Admin, group.JID.String())
+			}
+		}
+	}
+	return Admin, err
+}
+
+func (client *NewClientImpl) UploadImage(data []byte) (string, error) {
+	bodyy := &bytes.Buffer{}
+	writer := multipart.NewWriter(bodyy)
+	part, _ := writer.CreateFormFile("file", "file")
+	_, err := io.Copy(part, bytes.NewBuffer(data))
+	if err != nil {
+		return "", err
+	}
+	writer.Close()
+
+	// Create request
+	req, err := http.NewRequest("POST", "https://telegra.ph/upload", bodyy)
+	if err != nil {
+		return "", err
+	}
+
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+
+	// Send request and handle response
+	htt := &http.Client{}
+	resp, err := htt.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		return "", fmt.Errorf("HTTP Error: %d", resp.StatusCode)
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	var uploads []struct {
+		Path string `json:"src"`
+	}
+	if err := json.Unmarshal(body, &uploads); err != nil {
+		m := map[string]string{}
+		if err := json.Unmarshal(data, &m); err != nil {
+			return "", err
+		}
+		return "", fmt.Errorf("telegraph: %s", m["error"])
+	}
+
+	return "https://telegra.ph/" + uploads[0].Path, nil
+}
+*/
