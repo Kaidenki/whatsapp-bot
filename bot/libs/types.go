@@ -4,6 +4,7 @@ import (
 	"go.mau.fi/whatsmeow"
 	"go.mau.fi/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/types"
+	"go.mau.fi/whatsmeow/types/events"
 )
 
 type IClient struct {
@@ -27,7 +28,9 @@ type Iplugin struct {
 }
 
 type IMessage struct {
+	Omessage   *events.Message
 	Info       types.MessageInfo
+	IsGroup    bool
 	FromMe     bool
 	Body       string
 	Text       string

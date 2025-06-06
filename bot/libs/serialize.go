@@ -74,7 +74,9 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 	}
 
 	return &IMessage{
+		Omessage:   mess,
 		Info:       mess.Info,
+		IsGroup:    strings.HasSuffix(mess.Info.Chat.String(), "@g.us"),
 		FromMe:     FromMe,
 		Body:       body,
 		Text:       text,

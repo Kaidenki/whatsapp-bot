@@ -128,3 +128,39 @@ func GetMediaType(message *waE2E.Message) string {
 	}
 	return ""
 }
+
+func GetMessageType(msg *waE2E.Message) string {
+	if msg == nil {
+		return "unknown"
+	}
+	switch {
+	case msg.ExtendedTextMessage != nil:
+		return "extendedTextMessage"
+	case msg.ImageMessage != nil:
+		return "imageMessage"
+	case msg.VideoMessage != nil:
+		return "videoMessage"
+	case msg.DocumentMessage != nil:
+		return "documentMessage"
+	case msg.AudioMessage != nil:
+		return "audioMessage"
+	case msg.StickerMessage != nil:
+		return "stickerMessage"
+	case msg.ContactMessage != nil:
+		return "contactMessage"
+	case msg.LocationMessage != nil:
+		return "locationMessage"
+	case msg.LiveLocationMessage != nil:
+		return "liveLocationMessage"
+	case msg.Conversation != nil:
+		return "conversation"
+	case msg.ButtonsMessage != nil:
+		return "buttonsMessage"
+	case msg.ListMessage != nil:
+		return "listMessage"
+	case msg.ProtocolMessage != nil:
+		return "protocolMessage"
+	default:
+		return "unknown"
+	}
+}

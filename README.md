@@ -4,7 +4,7 @@ A powerful and feature-rich WhatsApp bot designed for seamless automation and en
 
 ### Credits & Acknowledgments
 
-A special thanks to:
+Special thanks to:
 
 - **[@DikaArdnt](https://github.com/DikaArdnt)** – Creator of [go-readsw](https://github.com/DikaArdnt/go-readsw). 
 - **[@fckvania](https://github.com/fckvania)** – Creator of [MaoGo](https://github.com/fckvania/MaoGo).  

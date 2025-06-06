@@ -15,6 +15,7 @@ type Config struct {
 	Pattern      helpers.ParsedPattern
 	Mode         string
 	Database_url string
+	LogMsg       bool
 }
 
 var GlobalConfig Config
@@ -52,12 +53,18 @@ func InitConfig() {
 
 	databaseURL := os.Getenv("DATABASE_URL")
 
+	logMsg := false
+	if strings.ToLower(os.Getenv("LOG_MSG")) == "true" {
+		logMsg = true
+	}
+
 	GlobalConfig = Config{
 		Bot_Name:     botName,
 		Sudo:         sudoList,
 		Pattern:      parsedPattern,
 		Mode:         mode,
 		Database_url: databaseURL,
+		LogMsg:       logMsg,
 	}
 
 }
