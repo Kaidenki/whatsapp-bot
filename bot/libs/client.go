@@ -3,7 +3,7 @@ package libs
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 
@@ -201,15 +201,30 @@ func (conn *IClient) SendSticker(jid types.JID, data []byte, opts *waE2E.Context
 	return ok, nil
 }
 
+func (conn *IClient) BuildEdit(chat types.JID, id types.MessageID, newContent *waE2E.Message) *waE2E.Message {
+	return &waE2E.Message{
+		ProtocolMessage: &waE2E.ProtocolMessage{
+			Type: waE2E.ProtocolMessage_MESSAGE_EDIT.Enum(),
+			Key: &waCommon.MessageKey{
+				FromMe:    proto.Bool(true),
+				ID:        proto.String(id),
+				RemoteJID: proto.String(chat.String()), // note: field is RemoteJid, not RemoteJID
+			},
+			EditedMessage: newContent,
+		},
+	}
+}
+
 func (conn *IClient) GetBytes(url string) ([]byte, error) {
 	resp, err := http.Get(url)
 	if err != nil {
-		return []byte{}, err
+		return nil, err
 	}
+	defer resp.Body.Close()
 
-	bytes, err := ioutil.ReadAll(resp.Body)
+	bytes, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return []byte{}, err
+		return nil, err
 	}
 
 	return bytes, nil

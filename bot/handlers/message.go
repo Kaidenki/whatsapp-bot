@@ -61,8 +61,7 @@ func (h *IHandler) RegisterHandler(conn *whatsmeow.Client) func(evt interface{})
 				fmt.Print("\x1b[92mMessage : ", m.Info.Type, "\x1b[39m", "\n")
 			}
 
-			// Get command
-			go ExecuteCommand(sock, m) // This function is now in command_executor.go
+			go ExecuteCommand(sock, m)
 			return
 		case *events.Connected, *events.PushNameSetting:
 			if len(conn.Store.PushName) == 0 {

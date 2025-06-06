@@ -21,7 +21,7 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 		if len(matches) == 0 {
 			return
 		}
-		// Random prefix pick for variety
+
 		prefix = matches[rand.Intn(len(matches))]
 		withoutPrefix = strings.TrimPrefix(m.Command, prefix)
 
@@ -40,7 +40,6 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 			cmd.Before(c, m)
 		}
 
-		// Match command name strictly after prefix removal
 		re := regexp.MustCompile(`^` + cmd.Name + `$`)
 		if !re.MatchString(withoutPrefix) {
 			continue
@@ -50,12 +49,10 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 			continue
 		}
 
-		// Restrict by global mode "private"
 		if config.GlobalConfig.Mode == "private" && !m.FromMe {
 			return
 		}
 
-		// Check prefix usage and command prefix flag
 		cmdWithPref := cmd.IsPrefix && prefix != "" && strings.HasPrefix(m.Command, prefix)
 		cmdWithoutPref := !cmd.IsPrefix
 
@@ -63,7 +60,6 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 			continue
 		}
 
-		// Permissions and requirements checks
 		if cmd.FromMe && !m.FromMe {
 			continue
 		}
