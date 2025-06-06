@@ -26,10 +26,27 @@ var tinyChrmap = map[rune]rune{
 	'Y': 'Y', 'Z': 'Z',
 }
 
+var fancy1Chrmap = map[rune]rune{
+	'A': '𝙰', 'B': '𝙱', 'C': '𝙲', 'D': '𝙳', 'E': '𝙴', 'F': '𝙵', 'G': '𝙶', 'H': '𝙷', 'I': '𝙸', 'J': '𝙹', 'K': '𝙺', 'L': '𝙻', 'M': '𝙼',
+	'N': '𝙽', 'O': '𝙾', 'P': '𝙿', 'Q': '𝚀', 'R': '𝚁', 'S': '𝚂', 'T': '𝚃', 'U': '𝚄', 'V': '𝚅', 'W': '𝚆', 'X': '𝚇', 'Y': '𝚈', 'Z': '𝚉',
+}
+
 func Tiny(text string) string {
 	var sb strings.Builder
 	for _, ch := range text {
 		if mapped, ok := tinyChrmap[ch]; ok {
+			sb.WriteRune(mapped)
+		} else {
+			sb.WriteRune(ch)
+		}
+	}
+	return sb.String()
+}
+
+func Fancy1(text string) string {
+	var sb strings.Builder
+	for _, ch := range strings.ToUpper(text) {
+		if mapped, ok := fancy1Chrmap[ch]; ok {
 			sb.WriteRune(mapped)
 		} else {
 			sb.WriteRune(ch)

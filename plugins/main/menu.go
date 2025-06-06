@@ -1,11 +1,15 @@
 package plugins
 
 import (
+	"aurora/bot/config"
 	"aurora/bot/helpers"
 	"aurora/bot/libs"
 	"aurora/bot/utils"
 	"fmt"
+	"os"
 	"sort"
+	"strings"
+	"time"
 )
 
 type item struct {
@@ -19,28 +23,46 @@ func (t tagSlice) Len() int           { return len(t) }
 func (t tagSlice) Less(i, j int) bool { return t[i] < t[j] }
 func (t tagSlice) Swap(i, j int)      { t[i], t[j] = t[j], t[i] }
 
+var botPrefix string
+
 func menu(conn *libs.IClient, m *libs.IMessage) bool {
-	dateStr := utils.GetDate()
+	var version string
+	data, err := os.ReadFile("version.txt")
+	if err != nil {
+		version = "unknown"
+	} else {
+		version = strings.TrimSpace(string(data))
+	}
+
+	now := time.Now()
+	timeStr := now.Format("03:04 PM")
+	dayStr := now.Format("Monday")
+	dateStr := now.Format("02/01/2006")
 	ramStr, err := utils.GetRAMUsage()
 	if err != nil {
-		ramStr = "Ram: Unknown"
+		ramStr = "Unknown"
 	}
 	uptimeSeconds := utils.UptimeSeconds()
 	runtimeStr := utils.Runtime(uptimeSeconds)
 
-	var str string
-	str += fmt.Sprintf("Date: %s\n", dateStr)
-	str += fmt.Sprintf("Ram: %s\n", ramStr)
-	str += fmt.Sprintf("Uptime: %s\n\n", runtimeStr)
-	totalplugins := len(libs.GetList())
-	str += fmt.Sprintf("Plugins : %d\n", totalplugins)
-	str += fmt.Sprintf("User : %s\n", m.Info.PushName)
+	var strBuilder strings.Builder
 
-	var tags map[string][]item
+	strBuilder.WriteString(fmt.Sprintf("╭━〔  *%s* 〕━◉\n", strings.ToUpper(config.GlobalConfig.Bot_Name)))
+	strBuilder.WriteString("┃╭━━━━━━━━━━━━━━◉\n")
+	strBuilder.WriteString(fmt.Sprintf("┃┃ *Prefix(s) :* %s\n", botPrefix))
+	strBuilder.WriteString(fmt.Sprintf("┃┃ *User :* %s\n", m.Info.PushName))
+	strBuilder.WriteString(fmt.Sprintf("┃┃ *Time :* %s\n", timeStr))
+	strBuilder.WriteString(fmt.Sprintf("┃┃ *Day :* %s\n", dayStr))
+	strBuilder.WriteString(fmt.Sprintf("┃┃ *Date :* %s\n", dateStr))
+	strBuilder.WriteString(fmt.Sprintf("┃┃ *Version :* %s\n", version))
+	strBuilder.WriteString(fmt.Sprintf("┃┃ *Plugins :* %d\n", len(libs.GetList())))
+	strBuilder.WriteString(fmt.Sprintf("┃┃ *Ram :* %s\n", ramStr))
+	strBuilder.WriteString(fmt.Sprintf("┃┃ *Uptime :* %s\n", runtimeStr))
+	strBuilder.WriteString("┃╰━━━━━━━━━━━━━◉\n")
+	strBuilder.WriteString("╰═════════════════⊷\n")
+
+	var tags = make(map[string][]item)
 	for _, list := range libs.GetList() {
-		if tags == nil {
-			tags = make(map[string][]item)
-		}
 		if _, ok := tags[list.Tags]; !ok {
 			tags[list.Tags] = []item{}
 		}
@@ -56,20 +78,30 @@ func menu(conn *libs.IClient, m *libs.IMessage) bool {
 	sort.Sort(keys)
 
 	for _, key := range keys {
-		str += fmt.Sprintf(" *%s*\n", helpers.CapitalizeWords(key))
+		strBuilder.WriteString(fmt.Sprintf(" ╭─❏ *%s* ❏\n", utils.Fancy1(strings.ToUpper(key))))
 		for _, e := range tags[key] {
 			for _, nm := range e.Name {
-				str += fmt.Sprintf("```%s```\n", nm)
+				strBuilder.WriteString(fmt.Sprintf(" │ %s\n", utils.Fancy1(nm)))
 			}
 		}
-		str += "\n"
+		strBuilder.WriteString(" ╰─────────────────\n")
 	}
 
-	m.Reply(str)
+	m.Reply(strBuilder.String())
 	return true
 }
 
 func init() {
+	p := config.GlobalConfig.Pattern
+
+	if p.Type == helpers.LiteralPattern {
+		botPrefix = p.Literal
+	} else if p.Regex != nil {
+		botPrefix = p.Regex.String()
+	} else {
+		botPrefix = helpers.DefaultPattern
+	}
+
 	libs.Newplugin(&libs.Iplugin{
 		Name:        "menu",
 		As:          []string{"menu"},

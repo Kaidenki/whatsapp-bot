@@ -3,24 +3,39 @@ package config
 import (
 	"aurora/bot/helpers"
 	"os"
-	_ "strconv"
 	"strings"
 
 	"github.com/joho/godotenv"
 )
 
 type Config struct {
-	Bot_Name     string
-	Sudo         []string
-	Pattern      helpers.ParsedPattern
-	Mode         string
-	Database_url string
-	Go_Env       string
-	LogMsg       bool
+	Bot_Name        string
+	Sudo            []string
+	Pattern         helpers.ParsedPattern
+	Mode            string
+	Database_url    string
+	Go_Env          string
+	LogMsg          bool
+	TimeZone        string
+	StatusView      bool
+	AutoUpdate      string
+	Lang            string
+	Read            string // only "true", "cmd", "false"
+	React           string // only "true", "cmd", "false"
+	AutoStatusReact bool
 }
 
 var GlobalConfig Config
 var log helpers.Logger
+
+func validReactOrReadValue(val string) string {
+	switch strings.ToLower(val) {
+	case "true", "cmd", "false":
+		return strings.ToLower(val)
+	default:
+		return ""
+	}
+}
 
 func InitConfig() {
 	if err := godotenv.Load(); err != nil {
@@ -29,7 +44,7 @@ func InitConfig() {
 
 	botName := os.Getenv("BOT_NAME")
 	if botName == "" {
-		botName = "kaidenki's bot"
+		botName = "aurora"
 	}
 
 	sudoEnv := os.Getenv("SUDO")
@@ -38,11 +53,10 @@ func InitConfig() {
 		sudoList = strings.Split(sudoEnv, ",")
 	}
 
-	Pattern := os.Getenv("PATTERN")
-	parsedPattern := helpers.ParsePattern(Pattern)
+	pattern := os.Getenv("PATTERN")
+	parsedPattern := helpers.ParsePattern(pattern)
 
-	mode := os.Getenv("MODE")
-	mode = strings.ToLower(mode)
+	mode := strings.ToLower(os.Getenv("MODE"))
 	if mode != "private" && mode != "public" {
 		mode = "private"
 	}
@@ -54,21 +68,62 @@ func InitConfig() {
 		logMsg = true
 	}
 
+	autoStatusReact := false
+	if strings.ToLower(os.Getenv("AUTO_STATUS_REACT")) == "true" {
+		autoStatusReact = true
+	}
+
+	timezone := os.Getenv("TIMEZONE")
+	if timezone == "" {
+		timezone = "Africa/lagos"
+	}
+
+	statusView := false
+	if strings.ToLower(os.Getenv("AUTO_STATUS_VIEW")) == "true" {
+		logMsg = true
+	}
+
+	autoUpdate := os.Getenv("AUTO_UPDATE")
+	if autoUpdate == "" {
+		autoUpdate = "true"
+	}
+
+	lang := os.Getenv("LANG")
+	if lang == "" {
+		lang = "english"
+	}
+
+	read := validReactOrReadValue(os.Getenv("READ"))
+	if read == "" {
+		read = "cmd"
+	}
+
+	react := validReactOrReadValue(os.Getenv("REACT"))
+	if react == "" {
+		react = "false"
+	}
+
 	goEnv := os.Getenv("GO_ENV")
 	if goEnv == "" {
 		goEnv = "development"
 	}
 
 	GlobalConfig = Config{
-		Bot_Name:     botName,
-		Sudo:         sudoList,
-		Pattern:      parsedPattern,
-		Mode:         mode,
-		Database_url: databaseURL,
-		Go_Env:       goEnv,
-		LogMsg:       logMsg,
+		Bot_Name:        botName,
+		Sudo:            sudoList,
+		Pattern:         parsedPattern,
+		Mode:            mode,
+		Database_url:    databaseURL,
+		Go_Env:          goEnv,
+		LogMsg:          logMsg,
+		TimeZone:        timezone,
+		StatusView:      statusView,
+		AutoUpdate:      autoUpdate,
+		Lang:            lang,
+		Read:            read,
+		React:           react,
+		AutoStatusReact: autoStatusReact,
 	}
-
 }
 
 func GetDatabaseConfig() (dbType, dbURL string) {
