@@ -15,6 +15,7 @@ type Config struct {
 	Pattern      helpers.ParsedPattern
 	Mode         string
 	Database_url string
+	Go_Env       string
 	LogMsg       bool
 }
 
@@ -35,11 +36,6 @@ func InitConfig() {
 	var sudoList []string
 	if sudoEnv != "" {
 		sudoList = strings.Split(sudoEnv, ",")
-	} else {
-		sudoList = []string{
-			"2349xxxxxxxx7",
-			"234xxxxxxxx36",
-		}
 	}
 
 	Pattern := os.Getenv("PATTERN")
@@ -58,20 +54,25 @@ func InitConfig() {
 		logMsg = true
 	}
 
+	goEnv := os.Getenv("GO_ENV")
+	if goEnv == "" {
+		goEnv = "development"
+	}
+
 	GlobalConfig = Config{
 		Bot_Name:     botName,
 		Sudo:         sudoList,
 		Pattern:      parsedPattern,
 		Mode:         mode,
 		Database_url: databaseURL,
+		Go_Env:       goEnv,
 		LogMsg:       logMsg,
 	}
 
 }
 
 func GetDatabaseConfig() (dbType, dbURL string) {
-	env := os.Getenv("GO_ENV")
-	formattedURL, valid := helpers.FormatPostgresURL(GlobalConfig.Database_url, env)
+	formattedURL, valid := helpers.FormatPostgresURL(GlobalConfig.Database_url, GlobalConfig.Go_Env)
 
 	if !valid {
 		log.Warn("Invalid or unsupported DATABASE_URL. Bot will stop.")

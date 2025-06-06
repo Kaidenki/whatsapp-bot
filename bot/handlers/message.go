@@ -69,7 +69,7 @@ func (h *IHandler) RegisterHandler(conn *whatsmeow.Client) func(evt interface{})
 
 				text := helpers.GetTextMessage(m.Omessage)
 
-				if msgType == "conversation" || msgType == "extendedtextmessage" {
+				if msgType == "conversation" || msgType == "extendedTextMessage" {
 					fmt.Println("Message :", text)
 				} else {
 					if text != "" {

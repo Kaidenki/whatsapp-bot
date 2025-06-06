@@ -30,6 +30,7 @@ type Template struct {
 }
 
 var log helpers.Logger
+var dbLog waLog.Logger
 
 func init() {
 	store.DeviceProps.PlatformType = waCompanionReg.DeviceProps_EDGE.Enum()
@@ -37,7 +38,13 @@ func init() {
 }
 
 func StartClient() {
-	dbLog := waLog.Stdout("Database", "DEBUG", true)
+	var goEnv = config.GlobalConfig.Go_Env
+	if goEnv == "development" {
+		dbLog = waLog.Stdout("Database", "DEBUG", true)
+	} else {
+		dbLog = waLog.Stdout("Database", "INFO", false)
+	}
+
 	ctx := context.Background()
 	dbType, dbURL := config.GetDatabaseConfig()
 	container, err := sqlstore.New(ctx, dbType, dbURL, dbLog)
@@ -46,10 +53,10 @@ func StartClient() {
 	}
 
 	handler := handlers.NewHandler(container)
-	log.Info("ℹ Connecting to WhatsApp... Please Wait.")
+	log.Info("Connecting to WhatsApp... Please Wait.")
 	conn := handler.Client()
 	conn.PrePairCallback = func(jid types.JID, platform, businessName string) bool {
-		log.Info("✅ Login Successful!")
+		log.Info("Login Successful!")
 		return true
 	}
 
@@ -61,6 +68,9 @@ func StartClient() {
 			pairingNumber = regexp.MustCompile(`\D+`).ReplaceAllString(pairingNumber, "")
 
 			if err := conn.Connect(); err != nil {
+				if conn.IsLoggedIn() {
+					log.Info("✅ Already logged in to WhatsApp")
+				}
 				panic(err)
 			}
 
@@ -91,13 +101,13 @@ func StartClient() {
 		if err := conn.Connect(); err != nil {
 			panic(err)
 		}
-		log.Info("✅ Login Successful!")
+		log.Info("Login Successful!")
 	}
 
-	// Listen to Ctrl+C (you can also do something else that prevents the program from exiting)
+	// Handle graceful shutdown
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 	<-c
-
+	log.Info("Shutting down gracefully...")
 	conn.Disconnect()
 }

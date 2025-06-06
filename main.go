@@ -6,16 +6,23 @@ import (
 	"aurora/bot/helpers"
 	"aurora/bot/utils"
 	"fmt"
+	"os"
+	"strings"
 )
 
-var log helpers.Logger
+var log = helpers.Logger{}
+var version string
 
 func main() {
+	data, err := os.ReadFile("version.txt")
+	if err != nil {
+		version = "unknown"
+	} else {
+		version = strings.TrimSpace(string(data))
+	}
+
 	config.InitConfig()
 	utils.InitUptime()
-
-	log.Info(fmt.Sprintf("Sudo Users: %v", config.GlobalConfig.Sudo))
-	log.Info(fmt.Sprintf("Mode: %s", config.GlobalConfig.Mode))
-
+	log.Info(fmt.Sprintf("Aurora Version: %s", version))
 	conn.StartClient()
 }
