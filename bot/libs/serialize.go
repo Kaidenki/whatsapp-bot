@@ -74,6 +74,13 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 	}
 
 	return &IMessage{
+		ID: &waE2E.ContextInfo{
+			StanzaID:      &mess.Info.ID,
+			Participant:   proto.String(mess.Info.Sender.String()),
+			QuotedMessage: mess.Message,
+		},
+		From:       mess.Info.Chat,
+		Sender:     mess.Info.Sender,
 		Omessage:   mess,
 		Info:       mess.Info,
 		IsGroup:    strings.HasSuffix(mess.Info.Chat.String(), "@g.us"),
@@ -87,6 +94,43 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 		Media:      media,
 		Expiration: helpers.GetContextInfo(mess.Message).GetExpiration(),
 		Quoted:     helpers.GetContextInfo(mess.Message),
+		IsImage:    mess.Message.GetImageMessage() != nil,
+		IsQuotedImage: func() bool {
+			return helpers.ParseQuotedMessage(mess.Message).GetImageMessage() != nil
+		}(),
+		IsQuotedSticker: func() bool {
+			return helpers.ParseQuotedMessage(mess.Message).GetStickerMessage() != nil
+		}(),
+		IsAdmin: func() bool {
+			if !mess.Info.IsGroup {
+				return false
+			}
+			groupInfo, err := conn.WA.GetGroupInfo(mess.Info.Chat)
+			if err != nil {
+				return false
+			}
+			for _, participant := range groupInfo.Participants {
+				if participant.JID.String() == mess.Info.Sender.String() && participant.IsAdmin {
+					return true
+				}
+			}
+			return false
+		}(),
+		IsBotAdmin: func() bool {
+			if !mess.Info.IsGroup {
+				return false
+			}
+			groupInfo, err := conn.WA.GetGroupInfo(mess.Info.Chat)
+			if err != nil {
+				return false
+			}
+			for _, participant := range groupInfo.Participants {
+				if participant.JID.String() == conn.WA.Store.ID.ToNonAD().String() && participant.IsAdmin {
+					return true
+				}
+			}
+			return false
+		}(),
 		Reply: func(text string, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error) {
 			var Expiration uint32
 			if helpers.GetContextInfo(mess.Message) != nil {

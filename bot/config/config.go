@@ -23,6 +23,8 @@ type Config struct {
 	Read            string // only "true", "cmd", "false"
 	React           string // only "true", "cmd", "false"
 	AutoStatusReact bool
+	StickerPackName string
+	StickerAuthor   string
 }
 
 var GlobalConfig Config
@@ -108,6 +110,18 @@ func InitConfig() {
 		goEnv = "development"
 	}
 
+	stickerPackEnv := os.Getenv("STICKER_PACKNAME")
+	packName := "❤️"
+	author := "kaidenki"
+	if stickerPackEnv != "" {
+		parts := strings.SplitN(stickerPackEnv, ",", 2)
+		if len(parts) > 0 && parts[0] != "" {
+			packName = strings.TrimSpace(parts[0])
+		}
+		if len(parts) > 1 && parts[1] != "" {
+			author = strings.TrimSpace(parts[1])
+		}
+	}
 	GlobalConfig = Config{
 		Bot_Name:        botName,
 		Sudo:            sudoList,
@@ -123,6 +137,8 @@ func InitConfig() {
 		Read:            read,
 		React:           react,
 		AutoStatusReact: autoStatusReact,
+		StickerPackName: packName,
+		StickerAuthor:   author,
 	}
 }
 

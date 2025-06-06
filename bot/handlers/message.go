@@ -47,7 +47,7 @@ func (h *IHandler) RegisterHandler(conn *whatsmeow.Client) func(evt interface{})
 		switch v := evt.(type) {
 		case *events.Message:
 			m := libs.SerializeMessage(v, sock)
-
+			fmt.Println(m.IsAdmin)
 			// skip deleted message
 			if m.Message.GetProtocolMessage() != nil && m.Message.GetProtocolMessage().GetType() == 0 {
 				return

@@ -28,20 +28,48 @@ type Iplugin struct {
 }
 
 type IMessage struct {
-	Omessage   *events.Message
-	Info       types.MessageInfo
-	IsGroup    bool
-	FromMe     bool
-	Body       string
-	Text       string
-	Args       []string
-	Command    string
-	Message    *waE2E.Message
-	Media      whatsmeow.DownloadableMessage
-	IsMedia    string
-	Expiration uint32
-	Quoted     *waE2E.ContextInfo
-	Reply      func(text string, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
-	React      func(emoji string, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
-	Edit       func(messageID string, newContent *waE2E.Message, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
+	ID              *waE2E.ContextInfo
+	From            types.JID
+	Sender          types.JID
+	Omessage        *events.Message
+	Info            types.MessageInfo
+	IsGroup         bool
+	FromMe          bool
+	Body            string
+	Text            string
+	Args            []string
+	Command         string
+	Message         *waE2E.Message
+	Media           whatsmeow.DownloadableMessage
+	IsMedia         string
+	Expiration      uint32
+	Quoted          *waE2E.ContextInfo
+	IsImage         bool
+	IsQuotedImage   bool
+	IsQuotedSticker bool
+	IsAdmin         bool
+	IsBotAdmin      bool
+	Reply           func(text string, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
+	React           func(emoji string, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
+	Edit            func(messageID string, newContent *waE2E.Message, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
+}
+
+type MediaType string
+
+const (
+	IMAGE = "image"
+	VIDEO = "video"
+)
+
+type MetadataSticker struct {
+	Author    string
+	Pack      string
+	KeepScale bool
+	Removebg  any
+	Circle    bool
+}
+
+type Sticker struct {
+	File []byte
+	Tipe MediaType
 }
