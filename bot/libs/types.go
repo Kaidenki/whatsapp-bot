@@ -45,6 +45,7 @@ type IMessage struct {
 	IsMedia         string
 	Expiration      uint32
 	Quoted          *waE2E.ContextInfo
+	IsSudo          bool
 	IsImage         bool
 	IsQuotedImage   bool
 	IsVideo         bool
@@ -53,6 +54,7 @@ type IMessage struct {
 	IsAdmin         bool
 	IsBotAdmin      bool
 	Reply           func(text string, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
+	ReplyMention    func(text string, mentionedJID *types.JID, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
 	React           func(emoji string, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
 	Edit            func(messageID string, newContent *waE2E.Message, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
 }

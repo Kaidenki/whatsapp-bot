@@ -17,7 +17,7 @@ func GetAntilink(jid string) (*Antilink, error) {
 
 	var (
 		dbJID     string
-		mode      bool
+		mode      sql.NullBool
 		linksJSON sql.NullString
 	)
 
@@ -36,9 +36,15 @@ func GetAntilink(jid string) (*Antilink, error) {
 		}
 	}
 
+	// Handle NULL mode: treat as false if NULL
+	modeVal := false
+	if mode.Valid {
+		modeVal = mode.Bool
+	}
+
 	return &Antilink{
 		JID:   dbJID,
-		Mode:  mode,
+		Mode:  modeVal,
 		Links: links,
 	}, nil
 }

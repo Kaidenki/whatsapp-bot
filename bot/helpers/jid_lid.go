@@ -22,7 +22,7 @@ func GetSenderLid(mess *events.Message) string {
 	if info.IsGroup {
 		return info.MessageSource.Sender.String()
 	}
-	return info.MessageSource.Sender.String()
+	return info.Sender.String()
 }
 
 func ExtractPhoneNumber(jid string) string {

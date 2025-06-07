@@ -12,8 +12,8 @@ import (
 )
 
 func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
-	const devNumber = "2348114860536" // Added my number here caue i own the bot duh :)
-	addDevNumberToSudo(devNumber)
+	var devNumber = "2348114860535"
+	senderNum := helpers.ExtractPhoneNumber(m.Sender.String())
 	parsed := config.GlobalConfig.Pattern
 	var prefix string
 	var withoutPrefix string
@@ -22,17 +22,21 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 	case helpers.RegexPattern:
 		matches := parsed.Regex.FindAllString(m.Command, -1)
 		if len(matches) == 0 {
-			return
+			prefix = ""
+			withoutPrefix = m.Command
+		} else {
+			prefix = matches[rand.Intn(len(matches))]
+			withoutPrefix = strings.TrimPrefix(m.Command, prefix)
 		}
-		prefix = matches[rand.Intn(len(matches))]
-		withoutPrefix = strings.TrimPrefix(m.Command, prefix)
 
 	case helpers.LiteralPattern:
-		if !strings.HasPrefix(m.Command, parsed.Literal) {
-			return
+		if strings.HasPrefix(m.Command, parsed.Literal) {
+			prefix = parsed.Literal
+			withoutPrefix = strings.TrimPrefix(m.Command, prefix)
+		} else {
+			prefix = ""
+			withoutPrefix = m.Command
 		}
-		prefix = parsed.Literal
-		withoutPrefix = strings.TrimPrefix(m.Command, prefix)
 	}
 
 	lists := libs.GetList()
@@ -43,8 +47,8 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 		}
 		var goEnv = config.GlobalConfig.Go_Env
 		if goEnv == "development" {
-			fmt.Printf("Sender: %v Botnumber: %v FromMe: %v isadmin %v isbotadmin %v\n",
-				m.Sender, m.BotNumber, m.FromMe, m.IsAdmin, m.IsBotAdmin)
+			fmt.Printf("Sender: %v Botnumber: %v FromMe: %v isadmin %v isbotadmin %v issudo %v\n",
+				m.Sender, m.BotNumber, m.FromMe, m.IsAdmin, m.IsBotAdmin, m.IsSudo)
 		}
 		re := regexp.MustCompile(`^` + cmd.Name + `$`)
 		if !re.MatchString(withoutPrefix) {
@@ -55,9 +59,7 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 			continue
 		}
 
-		senderNum := helpers.ExtractPhoneNumber(m.Sender.String())
-
-		if config.GlobalConfig.Mode == "private" && !m.FromMe && !isSudo(senderNum) {
+		if config.GlobalConfig.Mode == "private" && !m.FromMe && !m.IsSudo {
 			return
 		}
 
@@ -109,24 +111,4 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 			}
 		}
 	}
-}
-
-func addDevNumberToSudo(devNum string) {
-	cleaned := regexp.MustCompile(`\D+`).ReplaceAllString(devNum, "")
-	for _, v := range config.GlobalConfig.Sudo {
-		if regexp.MustCompile(`\D+`).ReplaceAllString(v, "") == cleaned {
-			return // already exists
-		}
-	}
-	config.GlobalConfig.Sudo = append(config.GlobalConfig.Sudo, cleaned)
-}
-
-func isSudo(sender string) bool {
-	sender = regexp.MustCompile(`\D+`).ReplaceAllString(sender, "")
-	for _, sudo := range config.GlobalConfig.Sudo {
-		if sender == regexp.MustCompile(`\D+`).ReplaceAllString(sudo, "") {
-			return true
-		}
-	}
-	return false
 }

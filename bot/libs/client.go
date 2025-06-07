@@ -153,21 +153,6 @@ func (conn *IClient) ParseJID(arg string) (types.JID, bool) {
 	}
 }
 
-func (conn *IClient) FetchGroupAdmin(Jid types.JID) ([]string, error) {
-	var Admin []string
-	resp, err := conn.WA.GetGroupInfo(Jid)
-	if err != nil {
-		return Admin, err
-	} else {
-		for _, group := range resp.Participants {
-			if group.IsAdmin || group.IsSuperAdmin {
-				Admin = append(Admin, group.JID.String())
-			}
-		}
-	}
-	return Admin, err
-}
-
 func (conn *IClient) SendSticker(jid types.JID, data []byte, opts *waE2E.ContextInfo) (whatsmeow.SendResponse, error) {
 	uploaded, err := conn.WA.Upload(context.Background(), data, whatsmeow.MediaImage)
 	if err != nil {
@@ -207,6 +192,62 @@ func (conn *IClient) BuildEdit(chat types.JID, id types.MessageID, newContent *w
 			EditedMessage: newContent,
 		},
 	}
+}
+
+func (conn *IClient) AddParticipant(groupJID types.JID, participantJID types.JID) ([]types.GroupParticipant, error) {
+	bareJID := types.JID{
+		User:   participantJID.User,
+		Server: participantJID.Server,
+		Device: 0,
+	}
+
+	participants, err := conn.WA.UpdateGroupParticipants(groupJID, []types.JID{bareJID}, whatsmeow.ParticipantChangeAdd)
+	if err != nil {
+		return nil, fmt.Errorf("failed to add participant %s to group %s: %w", bareJID.String(), groupJID.String(), err)
+	}
+	return participants, nil
+}
+
+func (conn *IClient) RemoveParticipant(groupJID types.JID, participantJID types.JID) ([]types.GroupParticipant, error) {
+	bareJID := types.JID{
+		User:   participantJID.User,
+		Server: participantJID.Server,
+		Device: 0,
+	}
+
+	participants, err := conn.WA.UpdateGroupParticipants(groupJID, []types.JID{bareJID}, whatsmeow.ParticipantChangeRemove)
+	if err != nil {
+		return nil, fmt.Errorf("failed to remove participant %s from group %s: %w", bareJID.String(), groupJID.String(), err)
+	}
+	return participants, nil
+}
+
+func (conn *IClient) PromoteParticipant(groupJID types.JID, participantJID types.JID) ([]types.GroupParticipant, error) {
+	bareJID := types.JID{
+		User:   participantJID.User,
+		Server: participantJID.Server,
+		Device: 0,
+	}
+
+	participants, err := conn.WA.UpdateGroupParticipants(groupJID, []types.JID{bareJID}, whatsmeow.ParticipantChangePromote)
+	if err != nil {
+		return nil, fmt.Errorf("failed to promote participant %s in group %s: %w", bareJID.String(), groupJID.String(), err)
+	}
+	return participants, nil
+}
+
+func (conn *IClient) DemoteParticipant(groupJID types.JID, participantJID types.JID) ([]types.GroupParticipant, error) {
+	bareJID := types.JID{
+		User:   participantJID.User,
+		Server: participantJID.Server,
+		Device: 0,
+	}
+
+	participants, err := conn.WA.UpdateGroupParticipants(groupJID, []types.JID{bareJID}, whatsmeow.ParticipantChangeDemote)
+	if err != nil {
+		return nil, fmt.Errorf("failed to demote participant %s in group %s: %w", bareJID.String(), groupJID.String(), err)
+	}
+	return participants, nil
 }
 
 func (conn *IClient) GetBytes(url string) ([]byte, error) {
