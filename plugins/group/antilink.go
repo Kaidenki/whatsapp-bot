@@ -73,12 +73,21 @@ func init() {
 
 			switch choice[0] {
 			case "on":
-				err := db.SetAntilink(jid, true, nil)
+				antilink, _ := db.GetAntilink(jid)
+				if antilink != nil {
+					modeStr := "delete"
+					if antilink.Mode {
+						modeStr = "kick"
+					}
+					m.Reply(fmt.Sprintf("_Antilink is already enabled with mode: %s_", modeStr))
+					return true
+				}
+				err := db.SetAntilink(jid, false, []string{})
 				if err != nil {
 					m.Reply("Failed to enable Antilink.")
 					return false
 				}
-				m.Reply("_Antilink turned on_")
+				m.Reply("_Antilink turned on with mode: delete. Use `" + prefix + "antilink set` to add links._")
 				return true
 
 			case "off":
@@ -96,12 +105,18 @@ func init() {
 					return true
 				}
 
-				mode := false
-				if choice[1] == "kick" {
-					mode = true
+				antilink, err := db.GetAntilink(jid)
+				if err != nil || antilink == nil {
+					m.Reply("Antilink is not enabled for this group. Please enable it first using `" + prefix + "antilink on`.")
+					return true
 				}
 
-				err := db.SetAntilink(jid, mode, nil)
+				newMode := false
+				if choice[1] == "kick" {
+					newMode = true
+				}
+
+				err = db.SetAntilink(jid, newMode, antilink.Links)
 				if err != nil {
 					m.Reply("Failed to set Antilink mode.")
 					return false
@@ -112,25 +127,48 @@ func init() {
 
 			case "set":
 				if len(choice) < 2 {
-					m.Reply("_You need to add some specific links to prohibit_")
+					m.Reply("_You need to add some specific links to prohibit, separated by commas._\nExample: `" + prefix + "antilink set google.com,facebook.com`")
 					return true
 				}
-				rawLinks := strings.Split(choice[1], ",")
-				links := make([]string, 0, len(rawLinks))
-				for _, link := range rawLinks {
+
+				antilink, err := db.GetAntilink(jid)
+				if err != nil || antilink == nil {
+					m.Reply("Antilink is not enabled for this group. Please enable it first using `" + prefix + "antilink on`.")
+					return true
+				}
+
+				rawLinksStr := strings.Join(choice[1:], "")
+				newRawLinks := strings.Split(rawLinksStr, ",")
+
+				linkSet := make(map[string]struct{})
+				for _, link := range antilink.Links {
+					linkSet[link] = struct{}{}
+				}
+
+				for _, link := range newRawLinks {
 					trimmed := strings.TrimSpace(link)
 					if trimmed != "" {
-						links = append(links, trimmed)
+						linkSet[trimmed] = struct{}{}
 					}
 				}
 
-				err := db.SetAntilink(jid, true, links)
+				allLinks := make([]string, 0, len(linkSet))
+				for link := range linkSet {
+					allLinks = append(allLinks, link)
+				}
+
+				if len(allLinks) == len(antilink.Links) && len(newRawLinks) > 0 {
+					m.Reply("_All provided links are already in the block list._")
+					return true
+				}
+
+				err = db.SetAntilink(jid, antilink.Mode, allLinks)
 				if err != nil {
-					m.Reply(fmt.Sprintf("Failed to set antilink: %v", err))
+					m.Reply(fmt.Sprintf("Failed to update antilink links: %v", err))
 					return false
 				}
 
-				m.Reply(fmt.Sprintf("_Antilink set to handle %d links_", len(links)))
+				m.Reply(fmt.Sprintf("_Links updated. Antilink now handles %d links._", len(allLinks)))
 				return true
 
 			default:
