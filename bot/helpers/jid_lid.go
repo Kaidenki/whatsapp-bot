@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"fmt"
 	"strings"
 
 	"go.mau.fi/whatsmeow/types/events"
@@ -8,6 +9,7 @@ import (
 
 func GetNormalizedSenderJID(mess *events.Message) string {
 	info := mess.Info
+	fmt.Println(info.MessageSource.Sender.String())
 	if info.IsGroup {
 		if info.MessageSource.SenderAlt.String() != "" {
 			return info.MessageSource.SenderAlt.String()
@@ -43,4 +45,10 @@ func ParseLID(jid string) string {
 	userOnly := strings.Split(userPart, ":")[0]
 	domainPart := parts[1]
 	return userOnly + "@" + domainPart
+}
+
+func NormalizeJID(jid string) string {
+	parts := strings.Split(jid, ":")
+	userPart := parts[0]
+	return userPart + "@s.whatsapp.net"
 }
