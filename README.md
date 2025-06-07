@@ -56,8 +56,7 @@ chmod +x run.sh
 Use the provided bat script to run the bot with auto-restart:
 
 ```bash
-chmod +x run.sh
-./run.sh
+.\run.bat
 ```
 ---
 ## 💬 Contributing
