@@ -7,6 +7,7 @@ import (
 	"aurora/bot/libs"
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"go.mau.fi/whatsmeow"
@@ -129,6 +130,29 @@ func handleGroupInfo(info *events.GroupInfo, conn *libs.IClient) {
 		fmt.Println("------")
 	}
 
+	formatTemplate := func(template string, jid types.JID, gname string) string {
+		return strings.NewReplacer(
+			"&mention", "@"+jid.User,
+			"&gname", gname,
+		).Replace(template)
+	}
+
+	//info.Notify isnt groupname its "// Seems like a top-level type for the invite" :)
+
+	if settings != nil && settings.Welcome {
+		for _, jid := range info.Join {
+			msg := formatTemplate("Welcome to &gname, &mention!", jid, info.Notify)
+			_ = conn.SendMentionMessage(chatJID, msg, []string{jid.String()})
+		}
+	}
+
+	if settings != nil && settings.Exit {
+		for _, jid := range info.Leave {
+			msg := formatTemplate("Goodbye, &mention! We’ll miss you.", jid, info.Notify)
+			_ = conn.SendMentionMessage(chatJID, msg, []string{jid.String()})
+		}
+	}
+
 	for _, jid := range info.Promote {
 		printGroupEventLog(jid, "promoted to", "promote")
 
@@ -152,7 +176,6 @@ func handleGroupInfo(info *events.GroupInfo, conn *libs.IClient) {
 				_ = conn.SendMentionMessage(chatJID,
 					fmt.Sprintf("@%s attempted unauthorized promotion. Both @%s and @%s have been demoted.", info.Sender.User, info.Sender.User, jid.User),
 					[]string{info.Sender.String(), jid.String()})
-
 				continue
 			}
 
