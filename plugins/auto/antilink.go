@@ -82,12 +82,14 @@ func init() {
 
 			if antilink.Mode {
 				conn.RemoveParticipant(chatJID, senderJID)
+
 				reply := fmt.Sprintf("_@%s kicked_", helpers.ExtractPhoneNumber(sender))
-				m.ReplyMention(reply, &senderJID)
+				conn.SendMentionMessage(chatJID, reply, []string{senderJID.String()})
 			} else {
 				reply := fmt.Sprintf("_@%s Links not allowed_", helpers.ExtractPhoneNumber(sender))
-				m.ReplyMention(reply, &senderJID)
+				conn.SendMentionMessage(chatJID, reply, []string{senderJID.String()})
 			}
+
 		},
 	})
 }

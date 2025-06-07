@@ -20,6 +20,25 @@ func SerializeClient(conn *whatsmeow.Client) *IClient {
 	}
 }
 
+func (conn *IClient) SendMentionMessage(to types.JID, text string, mentioned []string) error {
+	ctxInfo := &waE2E.ContextInfo{
+		MentionedJID: mentioned,
+	}
+
+	msg := &waE2E.Message{
+		ExtendedTextMessage: &waE2E.ExtendedTextMessage{
+			Text:        proto.String(text),
+			ContextInfo: ctxInfo,
+		},
+	}
+	_, err := conn.WA.SendMessage(context.Background(), to, msg)
+	if err != nil {
+		fmt.Println("❌ Failed to send mention message:", err)
+		return err
+	}
+	return nil
+}
+
 func (conn *IClient) SendText(from types.JID, txt string, opts *waE2E.ContextInfo, optn ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error) {
 	ok, er := conn.WA.SendMessage(context.Background(), from, &waE2E.Message{
 		ExtendedTextMessage: &waE2E.ExtendedTextMessage{

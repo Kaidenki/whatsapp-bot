@@ -166,27 +166,6 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 				Expiration:    &Expiration,
 			}, opts...)
 		},
-		ReplyMention: func(text string, mentionedJID *types.JID, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error) {
-			var expiration uint32
-			if helpers.GetContextInfo(mess.Message) != nil {
-				expiration = helpers.GetContextInfo(mess.Message).GetExpiration()
-			} else {
-				expiration = 0
-			}
-
-			contextInfo := &waE2E.ContextInfo{
-				StanzaID:      &mess.Info.ID,
-				Participant:   proto.String(mess.Info.Sender.String()),
-				QuotedMessage: mess.Message,
-				Expiration:    &expiration,
-			}
-
-			if mentionedJID != nil && mentionedJID.User != "" && mentionedJID.Server != "" {
-				contextInfo.MentionedJID = []string{mentionedJID.String()}
-			}
-
-			return conn.SendText(mess.Info.Chat, text, contextInfo, opts...)
-		},
 		React: func(emoji string, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error) {
 			return conn.WA.SendMessage(context.Background(), mess.Info.Chat, conn.WA.BuildReaction(mess.Info.Chat, mess.Info.Sender, mess.Info.ID, emoji), opts...)
 		},

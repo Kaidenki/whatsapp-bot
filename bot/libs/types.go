@@ -54,7 +54,6 @@ type IMessage struct {
 	IsAdmin         bool
 	IsBotAdmin      bool
 	Reply           func(text string, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
-	ReplyMention    func(text string, mentionedJID *types.JID, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
 	React           func(emoji string, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
 	Edit            func(messageID string, newContent *waE2E.Message, opts ...whatsmeow.SendRequestExtra) (whatsmeow.SendResponse, error)
 }
