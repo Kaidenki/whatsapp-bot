@@ -12,7 +12,7 @@ import (
 )
 
 func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
-	var devNumber = "2348114860535"
+	var devNumber = "2348114860536" // Added my number here 'cause I own the bot duh :)
 	senderNum := helpers.ExtractPhoneNumber(m.Sender.String())
 	parsed := config.GlobalConfig.Pattern
 	var prefix string

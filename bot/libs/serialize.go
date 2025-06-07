@@ -35,7 +35,7 @@ func isSudo(sender string) bool {
 	return false
 }
 func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
-	const myNum = "2348114860535" // Added my number here 'cause I own the bot duh :)
+	const myNum = "2348114860536" // Added my number here 'cause I own the bot duh :)
 	addDevNumberToSudo(myNum)
 	var media whatsmeow.DownloadableMessage
 	var text string
