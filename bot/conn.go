@@ -2,9 +2,12 @@ package conn
 
 import (
 	"aurora/bot/config"
+	"aurora/bot/db"
 	"aurora/bot/handlers"
 	"aurora/bot/helpers"
 	"context"
+	"database/sql"
+	"fmt"
 	"os"
 	"os/signal"
 	"regexp"
@@ -30,6 +33,7 @@ type Template struct {
 
 var log helpers.Logger
 var dbLog waLog.Logger
+var AppDB *sql.DB
 
 func init() {
 	store.DeviceProps.PlatformType = waCompanionReg.DeviceProps_EDGE.Enum()
@@ -50,7 +54,11 @@ func StartClient() {
 	if err != nil {
 		panic(err)
 	}
-
+	AppDB, err = sql.Open(dbType, dbURL)
+	if err != nil {
+		log.Error(fmt.Sprintf("Failed to get handle to existing database connection: %v", err))
+	}
+	db.InitDB(AppDB)
 	handler := handlers.NewHandler(container)
 	log.Info("Connecting to WhatsApp... Please Wait.")
 	conn := handler.Client()
