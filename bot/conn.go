@@ -5,7 +5,6 @@ import (
 	"aurora/bot/handlers"
 	"aurora/bot/helpers"
 	"context"
-	"fmt"
 	"os"
 	"os/signal"
 	"regexp"
@@ -81,7 +80,7 @@ func StartClient() {
 				panic(err)
 			}
 
-			fmt.Println("Your Paring Code : " + code)
+			log.Info("Your Paring Code : " + code)
 		} else {
 			qrChan, _ := conn.GetQRChannel(context.Background())
 			if err := conn.Connect(); err != nil {

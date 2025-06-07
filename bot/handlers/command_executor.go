@@ -4,6 +4,7 @@ import (
 	"aurora/bot/config"
 	"aurora/bot/helpers"
 	"aurora/bot/libs"
+	"fmt"
 	"math/rand"
 	"regexp"
 	"strings"
@@ -40,6 +41,7 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 			cmd.Before(c, m)
 		}
 
+		fmt.Println("Sender:", m.Sender, "FromMe:", m.FromMe, "isadmin", m.IsAdmin, "isbotadmin", m.IsBotAdmin)
 		re := regexp.MustCompile(`^` + cmd.Name + `$`)
 		if !re.MatchString(withoutPrefix) {
 			continue
@@ -49,10 +51,10 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 			continue
 		}
 
-		if config.GlobalConfig.Mode == "private" && !m.FromMe {
+		senderNum := m.Info.Sender.User
+		if config.GlobalConfig.Mode == "private" && !isSudo(senderNum) {
 			return
 		}
-
 		cmdWithPref := cmd.IsPrefix && prefix != "" && strings.HasPrefix(m.Command, prefix)
 		cmdWithoutPref := !cmd.IsPrefix
 
@@ -100,4 +102,13 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 			continue
 		}
 	}
+}
+
+func isSudo(sender string) bool {
+	for _, sudo := range config.GlobalConfig.Sudo {
+		if sender == sudo {
+			return true
+		}
+	}
+	return false
 }

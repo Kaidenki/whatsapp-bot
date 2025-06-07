@@ -15,7 +15,6 @@ func sticker(conn *libs.IClient, m *libs.IMessage) bool {
 		return false
 	}
 
-	// Check if "-c" (circle) flag is in args
 	circle := false
 	for _, arg := range m.Args {
 		if strings.ToLower(arg) == "-c" {
@@ -24,25 +23,35 @@ func sticker(conn *libs.IClient, m *libs.IMessage) bool {
 		}
 	}
 
-	var mediaType libs.MediaType = libs.VIDEO
-	if m.IsImage || m.IsQuotedImage || m.IsQuotedSticker {
+	var mediaType libs.MediaType
+
+	switch {
+	case m.IsImage || m.IsQuotedImage || m.IsQuotedSticker:
 		mediaType = libs.IMAGE
+	case m.IsVideo || m.IsQuotedVideo:
+		mediaType = libs.VIDEO
+	default:
+		m.Reply("❌ Unsupported media type for sticker")
+		return false
 	}
 
-	s := utils.StickerApi(&libs.Sticker{
+	stickerObj := &libs.Sticker{
 		File: data,
 		Tipe: mediaType,
-	}, &libs.MetadataSticker{
+	}
+
+	metadata := &libs.MetadataSticker{
 		Author:    config.GlobalConfig.StickerAuthor,
 		Pack:      config.GlobalConfig.StickerPackName,
 		KeepScale: true,
 		Removebg:  "false",
 		Circle:    circle,
-	})
+	}
+
+	s := utils.StickerApi(stickerObj, metadata)
 	conn.SendSticker(m.From, s.Build(), m.ID)
 	return true
 }
-
 func init() {
 	libs.Newplugin(&libs.Iplugin{
 		Name:     "(s|sticker)",

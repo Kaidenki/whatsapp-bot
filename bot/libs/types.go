@@ -46,6 +46,8 @@ type IMessage struct {
 	Quoted          *waE2E.ContextInfo
 	IsImage         bool
 	IsQuotedImage   bool
+	IsVideo         bool
+	IsQuotedVideo   bool
 	IsQuotedSticker bool
 	IsAdmin         bool
 	IsBotAdmin      bool

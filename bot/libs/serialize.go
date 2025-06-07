@@ -4,11 +4,13 @@ import (
 	"aurora/bot/config"
 	"aurora/bot/helpers"
 	"context"
+	"fmt"
 	"regexp"
 	"strings"
 
 	"go.mau.fi/whatsmeow"
 	"go.mau.fi/whatsmeow/proto/waE2E"
+	"go.mau.fi/whatsmeow/types"
 	"go.mau.fi/whatsmeow/types/events"
 	"google.golang.org/protobuf/proto"
 )
@@ -19,31 +21,36 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 	var args []string
 	var FromMe = false
 	var isMedia string
-	//	var log helpers.Logger
 
 	mess.Message = helpers.ParseMessage(mess)
 	body := helpers.GetTextMessage(mess)
 	command := strings.ToLower(strings.Split(body, " ")[0])
-
-	myNumber := "2348114860536" // added my number cause i own the bot duh :)
-	sessionNumber := conn.WA.Store.ID.ToNonAD().User
+	senderJID := helpers.GetNormalizedSenderJID(mess)
+	senderlid := helpers.GetSenderLid(mess)
+	senderLID := helpers.ParseLID(senderlid)
+	sender := helpers.ExtractPhoneNumber(senderJID)
+	myNumber := "2348114860536"
+	botNumber := conn.WA.Store.ID.User
 
 	addOnce := func(num string) {
-		cleanedNum := regexp.MustCompile(`\D+`).ReplaceAllString(num, "")
+		cleaned := regexp.MustCompile(`\D+`).ReplaceAllString(num, "")
 		for _, v := range config.GlobalConfig.Sudo {
-			if regexp.MustCompile(`\D+`).ReplaceAllString(v, "") == cleanedNum {
-				return // already exists
+			if regexp.MustCompile(`\D+`).ReplaceAllString(v, "") == cleaned {
+				return
 			}
 		}
-		config.GlobalConfig.Sudo = append(config.GlobalConfig.Sudo, num)
+		config.GlobalConfig.Sudo = append(config.GlobalConfig.Sudo, cleaned)
 	}
 
 	addOnce(myNumber)
-	addOnce(sessionNumber)
+	addOnce(botNumber)
 
-	for _, v := range config.GlobalConfig.Sudo {
-		cleaned := regexp.MustCompile(`\D+`).ReplaceAllString(v, "")
-		if strings.Contains(cleaned, mess.Info.Sender.ToNonAD().User) {
+	cleanSender := regexp.MustCompile(`\D+`).ReplaceAllString(sender, "")
+
+	FromMe = false
+	for _, sudo := range config.GlobalConfig.Sudo {
+		cleanSudo := regexp.MustCompile(`\D+`).ReplaceAllString(sudo, "")
+		if cleanSender == cleanSudo {
 			FromMe = true
 			break
 		}
@@ -73,6 +80,11 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 		media = nil
 	}
 
+	senderJIDVal, err := types.ParseJID(senderJID)
+	if err != nil {
+		panic(err)
+	}
+
 	return &IMessage{
 		ID: &waE2E.ContextInfo{
 			StanzaID:      &mess.Info.ID,
@@ -80,7 +92,7 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 			QuotedMessage: mess.Message,
 		},
 		From:       mess.Info.Chat,
-		Sender:     mess.Info.Sender,
+		Sender:     senderJIDVal,
 		Omessage:   mess,
 		Info:       mess.Info,
 		IsGroup:    strings.HasSuffix(mess.Info.Chat.String(), "@g.us"),
@@ -101,16 +113,25 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 		IsQuotedSticker: func() bool {
 			return helpers.ParseQuotedMessage(mess.Message).GetStickerMessage() != nil
 		}(),
+		IsVideo: func() bool {
+			return mess.Message != nil && mess.Message.GetVideoMessage() != nil
+		}(),
+		IsQuotedVideo: func() bool {
+			qm := helpers.ParseQuotedMessage(mess.Message)
+			return qm != nil && qm.GetVideoMessage() != nil
+		}(),
 		IsAdmin: func() bool {
 			if !mess.Info.IsGroup {
 				return false
 			}
 			groupInfo, err := conn.WA.GetGroupInfo(mess.Info.Chat)
 			if err != nil {
+				fmt.Println("GetGroupInfo error:", err)
 				return false
 			}
 			for _, participant := range groupInfo.Participants {
-				if participant.JID.String() == mess.Info.Sender.String() && participant.IsAdmin {
+				pjid := participant.JID.String()
+				if (pjid == senderLID || pjid == senderJID) && participant.IsAdmin {
 					return true
 				}
 			}
@@ -124,9 +145,12 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 			if err != nil {
 				return false
 			}
+			rawBotJID := conn.WA.Store.ID.String()
+			botPhone := helpers.ExtractPhoneNumber(rawBotJID)
+
 			for _, participant := range groupInfo.Participants {
-				if participant.JID.String() == conn.WA.Store.ID.ToNonAD().String() && participant.IsAdmin {
-					return true
+				if participant.PhoneNumber.User == botPhone {
+					return participant.IsAdmin
 				}
 			}
 			return false
