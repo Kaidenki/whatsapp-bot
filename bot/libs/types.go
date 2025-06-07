@@ -31,6 +31,7 @@ type IMessage struct {
 	ID              *waE2E.ContextInfo
 	From            types.JID
 	Sender          types.JID
+	BotNumber       string
 	Omessage        *events.Message
 	Info            types.MessageInfo
 	IsGroup         bool

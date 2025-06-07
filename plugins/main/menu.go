@@ -109,5 +109,6 @@ func init() {
 		Tags:        "main",
 		IsPrefix:    true,
 		Execute:     menu,
+		FromMe:      true,
 	})
 }

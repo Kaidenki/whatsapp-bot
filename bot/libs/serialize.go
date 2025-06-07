@@ -1,11 +1,9 @@
 package libs
 
 import (
-	"aurora/bot/config"
 	"aurora/bot/helpers"
 	"context"
 	"fmt"
-	"regexp"
 	"strings"
 
 	"go.mau.fi/whatsmeow"
@@ -21,40 +19,14 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 	var args []string
 	var FromMe = false
 	var isMedia string
-
+	var Botnumber1 = helpers.ExtractPhoneNumber(conn.WA.Store.ID.String())
 	mess.Message = helpers.ParseMessage(mess)
 	body := helpers.GetTextMessage(mess)
 	command := strings.ToLower(strings.Split(body, " ")[0])
 	senderJID := helpers.GetNormalizedSenderJID(mess)
 	senderlid := helpers.GetSenderLid(mess)
 	senderLID := helpers.ParseLID(senderlid)
-	sender := helpers.ExtractPhoneNumber(senderJID)
-	myNumber := "2348114860536"
-	botNumber := conn.WA.Store.ID.User
-
-	addOnce := func(num string) {
-		cleaned := regexp.MustCompile(`\D+`).ReplaceAllString(num, "")
-		for _, v := range config.GlobalConfig.Sudo {
-			if regexp.MustCompile(`\D+`).ReplaceAllString(v, "") == cleaned {
-				return
-			}
-		}
-		config.GlobalConfig.Sudo = append(config.GlobalConfig.Sudo, cleaned)
-	}
-
-	addOnce(myNumber)
-	addOnce(botNumber)
-
-	cleanSender := regexp.MustCompile(`\D+`).ReplaceAllString(sender, "")
-
-	FromMe = false
-	for _, sudo := range config.GlobalConfig.Sudo {
-		cleanSudo := regexp.MustCompile(`\D+`).ReplaceAllString(sudo, "")
-		if cleanSender == cleanSudo {
-			FromMe = true
-			break
-		}
-	}
+	FromMe = mess.Info.IsFromMe
 
 	if strings.HasPrefix(body, "@"+conn.WA.Store.ID.ToNonAD().User) {
 		body = strings.Trim(strings.Replace(body, "@"+conn.WA.Store.ID.ToNonAD().User, "", 1), " ")
@@ -93,6 +65,7 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 		},
 		From:       mess.Info.Chat,
 		Sender:     senderJIDVal,
+		BotNumber:  Botnumber1,
 		Omessage:   mess,
 		Info:       mess.Info,
 		IsGroup:    strings.HasSuffix(mess.Info.Chat.String(), "@g.us"),

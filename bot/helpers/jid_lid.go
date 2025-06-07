@@ -8,7 +8,6 @@ import (
 
 func GetNormalizedSenderJID(mess *events.Message) string {
 	info := mess.Info
-
 	if info.IsGroup {
 		if info.MessageSource.SenderAlt.String() != "" {
 			return info.MessageSource.SenderAlt.String()
