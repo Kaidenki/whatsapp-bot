@@ -130,16 +130,10 @@ func (conn *IClient) SendDocument(from types.JID, data []byte, fileName string, 
 	return ok, nil
 }
 
-func (conn *IClient) DeleteMsg(from types.JID, id string, me bool) {
-	conn.WA.SendMessage(context.Background(), from, &waE2E.Message{
-		ProtocolMessage: &waE2E.ProtocolMessage{
-			Type: waE2E.ProtocolMessage_REVOKE.Enum(),
-			Key: &waCommon.MessageKey{
-				FromMe: proto.Bool(me),
-				ID:     proto.String(id),
-			},
-		},
-	})
+func (conn *IClient) DeleteMsg(chat types.JID, messageID string, sender types.JID) error {
+	revokeMsg := conn.WA.BuildRevoke(chat, sender, types.MessageID(messageID))
+	_, err := conn.WA.SendMessage(context.Background(), chat, revokeMsg)
+	return err
 }
 
 func (conn *IClient) ParseJID(arg string) (types.JID, bool) {

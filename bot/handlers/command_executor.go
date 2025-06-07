@@ -12,7 +12,7 @@ import (
 )
 
 func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
-	const devNumber = "2348114860536"
+	const devNumber = "2348114860536" // Added my number here caue i own the bot duh :)
 	addDevNumberToSudo(devNumber)
 	parsed := config.GlobalConfig.Pattern
 	var prefix string
@@ -41,10 +41,11 @@ func ExecuteCommand(c *libs.IClient, m *libs.IMessage) {
 		if cmd.Before != nil {
 			cmd.Before(c, m)
 		}
-
-		fmt.Printf("Sender: %v Botnumber: %v FromMe: %v isadmin %v isbotadmin %v\n",
-			m.Sender, m.BotNumber, m.FromMe, m.IsAdmin, m.IsBotAdmin)
-
+		var goEnv = config.GlobalConfig.Go_Env
+		if goEnv == "development" {
+			fmt.Printf("Sender: %v Botnumber: %v FromMe: %v isadmin %v isbotadmin %v\n",
+				m.Sender, m.BotNumber, m.FromMe, m.IsAdmin, m.IsBotAdmin)
+		}
 		re := regexp.MustCompile(`^` + cmd.Name + `$`)
 		if !re.MatchString(withoutPrefix) {
 			continue

@@ -78,7 +78,7 @@ func SerializeMessage(mess *events.Message, conn *IClient) *IMessage {
 		IsMedia:    isMedia,
 		Media:      media,
 		Expiration: helpers.GetContextInfo(mess.Message).GetExpiration(),
-		Quoted:     helpers.GetContextInfo(mess.Message),
+		Quoted:     helpers.GetContextInfo(mess.RawMessage),
 		IsImage:    mess.Message.GetImageMessage() != nil,
 		IsQuotedImage: func() bool {
 			return helpers.ParseQuotedMessage(mess.Message).GetImageMessage() != nil

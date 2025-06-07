@@ -55,7 +55,7 @@ func menu(conn *libs.IClient, m *libs.IMessage) bool {
 	strBuilder.WriteString(fmt.Sprintf("┃┃ *Day :* %s\n", dayStr))
 	strBuilder.WriteString(fmt.Sprintf("┃┃ *Date :* %s\n", dateStr))
 	strBuilder.WriteString(fmt.Sprintf("┃┃ *Version :* %s\n", version))
-	strBuilder.WriteString(fmt.Sprintf("┃┃ *Plugins :* %d\n", len(libs.GetList())))
+	strBuilder.WriteString(fmt.Sprintf("┃┃ *Plugin(s) :* %d\n", len(libs.GetList())))
 	strBuilder.WriteString(fmt.Sprintf("┃┃ *Ram :* %s\n", ramStr))
 	strBuilder.WriteString(fmt.Sprintf("┃┃ *Uptime :* %s\n", runtimeStr))
 	strBuilder.WriteString("┃╰━━━━━━━━━━━━━◉\n")
@@ -109,6 +109,6 @@ func init() {
 		Tags:        "main",
 		IsPrefix:    true,
 		Execute:     menu,
-		FromMe:      true,
+		FromMe:      false,
 	})
 }
