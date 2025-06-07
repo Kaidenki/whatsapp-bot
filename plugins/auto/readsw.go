@@ -14,6 +14,7 @@ func init() {
 	libs.Newplugin(&libs.Iplugin{
 		Description: "Auto Reacts to/Reads status",
 		Before: func(conn *libs.IClient, m *libs.IMessage) {
+			log.Info("starting auto react")
 			if m.Info.Chat.String() == "status@broadcast" {
 				log.Info("status msg")
 				if config.GlobalConfig.StatusView {
